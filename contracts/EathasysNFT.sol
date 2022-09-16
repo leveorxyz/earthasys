@@ -23,6 +23,8 @@ contract Earthasys is
 
     uint256 private lastId;
 
+    mapping(string => address) _pollutantERC20Addresses;
+
     struct Pollutant {
         string name;
         string unit;
