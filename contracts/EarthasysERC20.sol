@@ -28,6 +28,20 @@ contract MyToken is ERC20, ERC20Burnable, Pausable, Ownable, ERC20Permit {
         _pause();
     }
 
+    function getERC20Metadata()
+        public
+        view
+        returns (
+            string memory,
+            string memory,
+            string memory,
+            string memory,
+            string memory
+        )
+    {
+        return (name(), symbol(), pollutantName, unitName, imageURI);
+    }
+
     function unpause() public onlyOwner {
         _unpause();
     }
