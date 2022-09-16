@@ -46,8 +46,8 @@ contract EarthasysERC20 is ERC20, ERC20Burnable, Pausable, Ownable, ERC20Permit 
         _unpause();
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount);
+    function mint(uint256 amount) public onlyOwner {
+        _mint(address(this), amount);
     }
 
     function _beforeTokenTransfer(
