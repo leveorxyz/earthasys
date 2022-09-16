@@ -8,7 +8,9 @@ import '@openzeppelin/contracts-upgradeable/token/ERC1155/extensions/ERC1155Supp
 import '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
 import '@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol';
 
-contract Earthasys is
+import './EarthasysERC20.sol';
+
+contract EarthasysNFT is
     Initializable,
     ERC1155Upgradeable,
     AccessControlUpgradeable,
@@ -27,7 +29,6 @@ contract Earthasys is
 
     struct Pollutant {
         string name;
-        string unit;
         uint256[] intialAmounts;
         uint256[] targetAmounts;
     }
@@ -51,6 +52,18 @@ contract Earthasys is
         _grantRole(PAUSER_ROLE, msg.sender);
         _grantRole(MINTER_ROLE, msg.sender);
         _grantRole(UPGRADER_ROLE, msg.sender);
+    }
+
+    function addNewERC20(
+        string memory newPollutentName,
+        string memory tokenName,
+        string memory ticker,
+        string memory unitName,
+        string memory imageURI
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        require(_pollutantERC20Addresses[newPollutentName] == address(0), 'Already added');
+        EarthasysERC20 newERC20 = new EarthasysERC20(tokenName, ticker, newPollutentName, unitName, imageURI);
+        _pollutantERC20Addresses[newPollutentName] = address(newERC20);
     }
 
     function setURI(string memory newuri) public onlyRole(URI_SETTER_ROLE) {
