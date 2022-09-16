@@ -96,21 +96,20 @@ contract EarthasysNFT is
 
     function mintNewProject(
         address account,
-        uint256 amount,
         bytes memory data,
         Pollutant[] memory pollutantDetails
     ) public onlyRole(MINTER_ROLE) {
         uint256 totalPolutants = pollutantDetails.length;
         for (uint256 i = 0; i < totalPolutants; i++) {
             require(
-                pollutantDetails[i].intialAmounts.length == amount &&
-                    pollutantDetails[i].targetAmounts.length == amount &&
+                pollutantDetails[i].intialAmounts.length == 1 &&
+                    pollutantDetails[i].targetAmounts.length == 1 &&
                     _pollutantERC20Addresses[pollutantDetails[i].name] != address(0),
                 'Invalid arguments'
             );
         }
         _onChainMetadata[lastId] = pollutantDetails;
-        _mint(account, lastId, amount, data);
+        _mint(account, lastId, 1, data);
         lastId++;
     }
 
