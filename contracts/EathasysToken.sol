@@ -21,6 +21,8 @@ contract Earthasys is
     bytes32 public constant MINTER_ROLE = keccak256('MINTER_ROLE');
     bytes32 public constant UPGRADER_ROLE = keccak256('UPGRADER_ROLE');
 
+    uint256 private lastId;
+
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
@@ -54,19 +56,24 @@ contract Earthasys is
 
     function mint(
         address account,
-        uint256 id,
         uint256 amount,
         bytes memory data
     ) public onlyRole(MINTER_ROLE) {
-        _mint(account, id, amount, data);
+        _mint(account, lastId, amount, data);
+        lastId++;
     }
 
     function mintBatch(
         address to,
-        uint256[] memory ids,
         uint256[] memory amounts,
         bytes memory data
     ) public onlyRole(MINTER_ROLE) {
+        uint256 totalNewIds = amounts.length; //2
+        uint256 lastNewID = totalNewIds + lastId; //2
+        uint256[] memory ids = new uint256[](totalNewIds);
+        for (uint256 i = lastId; i < lastNewID; i++) {
+            ids[i - lastId] = i;
+        }
         _mintBatch(to, ids, amounts, data);
     }
 
