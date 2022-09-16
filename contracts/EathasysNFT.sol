@@ -26,13 +26,11 @@ contract Earthasys is
     struct Pollutant {
         string name;
         string unit;
-        uint256 intialAmount;
-        uint256 targetAmount;
+        uint256[] intialAmounts;
+        uint256[] targetAmounts;
     }
 
-    struct OnChainMetadata {
-        Pollutant[] pollutants;
-    }
+    mapping(uint256 => Pollutant[]) _onChainMetadata;
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
@@ -68,12 +66,23 @@ contract Earthasys is
     function mint(
         address account,
         uint256 amount,
-        bytes memory data
+        bytes memory data,
+        Pollutant[] memory pollutantDetails
     ) public onlyRole(MINTER_ROLE) {
+        uint256 totalPolutants = pollutantDetails.length;
+        for (uint256 i = 0; i < totalPolutants; i++) {
+            require(
+                pollutantDetails[i].intialAmounts.length == amount &&
+                    pollutantDetails[i].targetAmounts.length == amount,
+                'Invalid arguments'
+            );
+        }
+        _onChainMetadata[lastId] = pollutantDetails;
         _mint(account, lastId, amount, data);
         lastId++;
     }
 
+    // TODO: add on chain metadata
     function mintBatch(
         address to,
         uint256[] memory amounts,
