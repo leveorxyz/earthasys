@@ -82,6 +82,10 @@ contract Earthasys is
         lastId++;
     }
 
+    function getOnChainMetadata(uint256 nftID) public view returns (Pollutant[] memory) {
+        return _onChainMetadata[nftID];
+    }
+
     // TODO: add on chain metadata
     function mintBatch(
         address to,
