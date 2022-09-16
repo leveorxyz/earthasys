@@ -113,6 +113,28 @@ contract EarthasysNFT is
         lastId++;
     }
 
+    function mintProjects(
+        uint256 nftID,
+        address account,
+        uint256 amount,
+        bytes memory data,
+        Pollutant[] memory pollutantDetails
+    ) public onlyRole(MINTER_ROLE) {
+        uint256 totalPolutants = pollutantDetails.length;
+        require(exists(nftID), 'Project not minted');
+        for (uint256 i = 0; i < totalPolutants; i++) {
+            Pollutant memory pollutant = pollutantDetails[i];
+            require(
+                pollutant.intialAmounts.length == amount + _onChainMetadata[nftID][i].intialAmounts.length &&
+                    pollutant.targetAmounts.length == amount + _onChainMetadata[nftID][i].intialAmounts.length &&
+                    _pollutantERC20Addresses[pollutant.name] != address(0),
+                'Invalid arguments'
+            );
+        }
+        _onChainMetadata[lastId] = pollutantDetails;
+        _mint(account, nftID, amount, data);
+    }
+
     function getOnChainMetadata(uint256 nftID) public view returns (Pollutant[] memory) {
         return _onChainMetadata[nftID];
     }

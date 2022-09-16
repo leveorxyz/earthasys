@@ -16,6 +16,7 @@ interface INFT {
     ) external;
 
     function mintProjects(
+        uint256 nftID,
         address account,
         uint256 amount,
         bytes memory data,
