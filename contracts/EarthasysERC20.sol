@@ -1,48 +1,27 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.15;
 
-import '@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol';
-import '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol';
-import '@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol';
-import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
-import '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/draft-ERC20PermitUpgradeable.sol';
-import '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
-import '@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol';
+import '@openzeppelin/contracts@4.7.3/token/ERC20/ERC20.sol';
+import '@openzeppelin/contracts@4.7.3/token/ERC20/extensions/ERC20Burnable.sol';
+import '@openzeppelin/contracts@4.7.3/security/Pausable.sol';
+import '@openzeppelin/contracts@4.7.3/access/Ownable.sol';
+import '@openzeppelin/contracts@4.7.3/token/ERC20/extensions/draft-ERC20Permit.sol';
 
-contract MyToken is
-    Initializable,
-    ERC20Upgradeable,
-    ERC20BurnableUpgradeable,
-    PausableUpgradeable,
-    OwnableUpgradeable,
-    ERC20PermitUpgradeable,
-    UUPSUpgradeable
-{
-    /// @custom:oz-upgrades-unsafe-allow constructor
-    constructor() {
-        _disableInitializers();
-    }
-
+contract MyToken is ERC20, ERC20Burnable, Pausable, Ownable, ERC20Permit {
     string pollutantName;
     string unitName;
     string imageURI;
 
-    function initialize(
+    constructor(
         string memory tokenName,
         string memory ticker,
         string memory _pollutantName,
         string memory _unitName,
         string memory _imageURI
-    ) public initializer {
-        __ERC20_init(tokenName, ticker);
+    ) ERC20(tokenName, ticker) ERC20Permit('MyToken') {
         pollutantName = _pollutantName;
         unitName = _unitName;
         imageURI = _imageURI;
-        __ERC20Burnable_init();
-        __Pausable_init();
-        __Ownable_init();
-        __ERC20Permit_init('MyToken');
-        __UUPSUpgradeable_init();
     }
 
     function pause() public onlyOwner {
@@ -64,6 +43,4 @@ contract MyToken is
     ) internal override whenNotPaused {
         super._beforeTokenTransfer(from, to, amount);
     }
-
-    function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 }
