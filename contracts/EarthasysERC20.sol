@@ -11,17 +11,20 @@ contract EarthasysERC20 is ERC20, ERC20Burnable, Pausable, Ownable, ERC20Permit 
     string pollutantName;
     string unitName;
     string imageURI;
+    uint256 price;
 
     constructor(
         string memory tokenName,
         string memory ticker,
         string memory _pollutantName,
         string memory _unitName,
-        string memory _imageURI
+        string memory _imageURI,
+        uint256 _price
     ) ERC20(tokenName, ticker) ERC20Permit('MyToken') {
         pollutantName = _pollutantName;
         unitName = _unitName;
         imageURI = _imageURI;
+        price = _price;
     }
 
     function pause() public onlyOwner {
@@ -48,6 +51,14 @@ contract EarthasysERC20 is ERC20, ERC20Burnable, Pausable, Ownable, ERC20Permit 
 
     function mint(uint256 amount) public onlyOwner {
         _mint(address(this), amount);
+    }
+
+    // TODO: Whitelist buyer
+    function buy(uint256 amount) public payable {
+        require(amount <= totalSupply(), 'Not enough supply');
+        uint256 totalPrice = amount * price;
+        require(totalPrice <= msg.value, 'Not enough value sent');
+        this.transfer(msg.sender, amount);
     }
 
     function _beforeTokenTransfer(

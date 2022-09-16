@@ -60,10 +60,11 @@ contract EarthasysNFT is
         string memory tokenName,
         string memory ticker,
         string memory unitName,
-        string memory imageURI
+        string memory imageURI,
+        uint256 price
     ) public onlyRole(DEFAULT_ADMIN_ROLE) {
         require(_pollutantERC20Addresses[newPollutentName] == address(0), 'Already added');
-        EarthasysERC20 newERC20 = new EarthasysERC20(tokenName, ticker, newPollutentName, unitName, imageURI);
+        EarthasysERC20 newERC20 = new EarthasysERC20(tokenName, ticker, newPollutentName, unitName, imageURI, price);
         _pollutantERC20Addresses[newPollutentName] = address(newERC20);
     }
 
