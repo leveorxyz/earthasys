@@ -58,6 +58,18 @@ contract EarthasysNFT is
         _protocol = IProtocol(_protocolAddress);
     }
 
+    function VerifySignature(
+        bytes32 _hashedMessage,
+        uint8 _v,
+        bytes32 _r,
+        bytes32 _s
+    ) internal pure returns (address) {
+        bytes memory prefix = '\x19Ethereum Signed Message:\n32';
+        bytes32 prefixedHashMessage = keccak256(abi.encodePacked(prefix, _hashedMessage));
+        address signer = ecrecover(prefixedHashMessage, _v, _r, _s);
+        return signer;
+    }
+
     function addNewERC20(
         string memory newPollutentName,
         string memory tokenName,
@@ -82,7 +94,7 @@ contract EarthasysNFT is
         _unpause();
     }
 
-    function mint(
+    function mintNew(
         address account,
         uint256 amount,
         bytes memory data,
