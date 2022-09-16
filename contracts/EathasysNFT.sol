@@ -53,7 +53,7 @@ contract EarthasysNFT is
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(URI_SETTER_ROLE, msg.sender);
         _grantRole(PAUSER_ROLE, msg.sender);
-        _grantRole(MINTER_ROLE, msg.sender);
+        _grantRole(MINTER_ROLE, _protocolAddress);
         _grantRole(UPGRADER_ROLE, msg.sender);
         _protocol = IProtocol(_protocolAddress);
     }
@@ -94,7 +94,7 @@ contract EarthasysNFT is
         _unpause();
     }
 
-    function mintNew(
+    function mintNewProject(
         address account,
         uint256 amount,
         bytes memory data,
