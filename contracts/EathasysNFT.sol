@@ -9,7 +9,6 @@ import '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
 import '@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol';
 
 import './EarthasysERC20.sol';
-import './Interfaces/IProtocol.sol';
 
 contract EarthasysNFT is
     Initializable,
@@ -41,8 +40,6 @@ contract EarthasysNFT is
         _disableInitializers();
     }
 
-    IProtocol _protocol;
-
     function initialize(address _protocolAddress) public initializer {
         __ERC1155_init('https://bafybeicw3mj2lc3k6fc2zs5g4zravbh2ekddkhadbjj7elngtqebkh6xyu.ipfs.nftstorage.link/');
         __AccessControl_init();
@@ -55,19 +52,6 @@ contract EarthasysNFT is
         _grantRole(PAUSER_ROLE, msg.sender);
         _grantRole(MINTER_ROLE, _protocolAddress);
         _grantRole(UPGRADER_ROLE, msg.sender);
-        _protocol = IProtocol(_protocolAddress);
-    }
-
-    function VerifySignature(
-        bytes32 _hashedMessage,
-        uint8 _v,
-        bytes32 _r,
-        bytes32 _s
-    ) internal pure returns (address) {
-        bytes memory prefix = '\x19Ethereum Signed Message:\n32';
-        bytes32 prefixedHashMessage = keccak256(abi.encodePacked(prefix, _hashedMessage));
-        address signer = ecrecover(prefixedHashMessage, _v, _r, _s);
-        return signer;
     }
 
     function addNewERC20(
