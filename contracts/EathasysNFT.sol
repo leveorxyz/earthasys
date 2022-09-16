@@ -23,6 +23,17 @@ contract Earthasys is
 
     uint256 private lastId;
 
+    struct Pollutant {
+        string name;
+        string unit;
+        uint256 intialAmount;
+        uint256 targetAmount;
+    }
+
+    struct OnChainMetadata {
+        Pollutant[] pollutants;
+    }
+
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
