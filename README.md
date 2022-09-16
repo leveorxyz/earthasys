@@ -1,4 +1,6 @@
-# `ethereum-boilerplate`
+# `Eathasys`
+
+An open & community-owned infrastructure system with a set of tools for managing, governing, and standardizing ecological asset data, claims, resolutions & offset issuance
 
 > Fully Typescript ready NextJS components for fast building dApps without running own backend
 
@@ -46,6 +48,7 @@ yarn start
 ```
 
 # 🧭 `Table of contents`
+
 - [`ethereum-boilerplate`](#ethereum-boilerplate)
 - [🚀 Quick Start](#-quick-start)
 - [🧭 Table of contents](#-table-of-contents)
@@ -97,4 +100,3 @@ location: `src/component/templates/transfers/NFT/NFTTransfers.tsx`
 location: `src/component/templates/transactions/Transactions.tsx`
 
 💰 `<Transactions />` : displays the user's transactions. Uses Moralis Evm API (does not require an active web3 provider).
-
