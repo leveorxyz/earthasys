@@ -88,7 +88,8 @@ contract EarthasysNFT is
         for (uint256 i = 0; i < totalPolutants; i++) {
             require(
                 pollutantDetails[i].intialAmounts.length == amount &&
-                    pollutantDetails[i].targetAmounts.length == amount,
+                    pollutantDetails[i].targetAmounts.length == amount &&
+                    _pollutantERC20Addresses[pollutantDetails[i].name] != address(0),
                 'Invalid arguments'
             );
         }
