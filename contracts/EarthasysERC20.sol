@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.15;
 
-import '@openzeppelin/contracts@4.7.3/token/ERC20/ERC20.sol';
-import '@openzeppelin/contracts@4.7.3/token/ERC20/extensions/ERC20Burnable.sol';
-import '@openzeppelin/contracts@4.7.3/security/Pausable.sol';
-import '@openzeppelin/contracts@4.7.3/access/Ownable.sol';
-import '@openzeppelin/contracts@4.7.3/token/ERC20/extensions/draft-ERC20Permit.sol';
+import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
+import '@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol';
+import '@openzeppelin/contracts/security/Pausable.sol';
+import '@openzeppelin/contracts/access/Ownable.sol';
+import '@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol';
 
 contract MyToken is ERC20, ERC20Burnable, Pausable, Ownable, ERC20Permit {
     string pollutantName;
