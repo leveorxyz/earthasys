@@ -29,6 +29,7 @@ contract EarthasysNFT is
 
     struct Pollutant {
         string name;
+        uint256 erc20Amount;
         uint256[] intialAmounts;
         uint256[] targetAmounts;
     }
@@ -114,6 +115,7 @@ contract EarthasysNFT is
                     _pollutantERC20Addresses[pollutant.name] != address(0),
                 'Invalid arguments'
             );
+            EarthasysERC20(_pollutantERC20Addresses[pollutant.name]).mint(pollutant.erc20Amount);
         }
         _onChainMetadata[lastId] = pollutantDetails;
         _mint(account, nftID, amount, data);
