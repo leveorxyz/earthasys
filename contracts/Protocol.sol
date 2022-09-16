@@ -8,7 +8,15 @@ contract Protocol is AccessControl {
 
     constructor(address reguulatorAddress, address offsetrerAddress) {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(DEFAULT_ADMIN_ROLE, reguulatorAddress);
-        _grantRole(DEFAULT_ADMIN_ROLE, offsetrerAddress);
+        _grantRole(REGULATORY_AUTHORITY_ROLE, reguulatorAddress);
+        _grantRole(OFFSETTER_ROLE, offsetrerAddress);
+    }
+
+    function isRegulator(address addressToCheck) public view returns (bool) {
+        return hasRole(REGULATORY_AUTHORITY_ROLE, addressToCheck);
+    }
+
+    function isOffsetter(address addressToCheck) public view returns (bool) {
+        return hasRole(OFFSETTER_ROLE, addressToCheck);
     }
 }
