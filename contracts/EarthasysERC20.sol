@@ -23,8 +23,21 @@ contract MyToken is
         _disableInitializers();
     }
 
-    function initialize() public initializer {
-        __ERC20_init('MyToken', 'MTK');
+    string pollutantName;
+    string unitName;
+    string imageURI;
+
+    function initialize(
+        string memory tokenName,
+        string memory ticker,
+        string memory _pollutantName,
+        string memory _unitName,
+        string memory _imageURI
+    ) public initializer {
+        __ERC20_init(tokenName, ticker);
+        pollutantName = _pollutantName;
+        unitName = _unitName;
+        imageURI = _imageURI;
         __ERC20Burnable_init();
         __Pausable_init();
         __Ownable_init();
