@@ -4,8 +4,9 @@ import '@nomiclabs/hardhat-solhint';
 import '@typechain/hardhat';
 import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-waffle';
-const dotenv = require('dotenv');
-const path = require('path');
+
+import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config({ path: path.resolve(__dirname, './.env') });
 
@@ -20,13 +21,14 @@ const chainIds = {
   bscmain: 56,
 };
 
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const { PRIVATE_KEY } = process.env;
 const API_KEY = process.env.RPC_NODE_API_KEY;
-const MNEMONIC = process.env.MNEMONIC;
+const { MNEMONIC } = process.env;
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY as string;
 
 const defaultRPCNodeProvider = 'infura';
 
+// eslint-disable-next-line consistent-return
 const getRPCURL = (network: string, RPCNodeProvider: string) => {
   switch (RPCNodeProvider) {
     case 'moralis':
@@ -44,7 +46,6 @@ const getRPCURL = (network: string, RPCNodeProvider: string) => {
     default:
       console.error('Unknown provider:', RPCNodeProvider);
   }
-  return;
 };
 
 const config: HardhatUserConfig = {
