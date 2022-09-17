@@ -1,12 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const { ethers } = require('hardhat');
+const { ethers, upgrades } = require('hardhat');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { writeFile } = require('fs/promises');
 
 async function main() {
-  // const CubeToken = await ethers.getContractFactory("CubeToken");
-  // const cubeToken = await upgrades.deployProxy(CubeToken, "fdf");
-  // await cubeToken.deployed();
   const Protocol = await ethers.getContractFactory('Protocol');
 
   const protocol = await Protocol.deploy(
@@ -16,9 +13,17 @@ async function main() {
 
   await protocol.deployed();
 
-  console.log('Greeting contract deployed to: ', protocol.address);
+  const NFT = await ethers.getContractFactory('EathasysNFT');
+  const nft = await upgrades.deployProxy(NFT, [protocol.address]);
+  await nft.deployed();
+
+  console.log('Protocol contract deployed to: ', protocol.address);
+  console.log('Earthasys NFT contract deployed to: ', nft.address);
   // write
-  await writeFile('./src/info/data.json', JSON.stringify({ protocolAddress: protocol.address }));
+  await writeFile(
+    './src/info/data.json',
+    JSON.stringify({ protocolAddress: protocol.address, nftAddress: nft.address }),
+  );
 }
 
 // We recommend this pattern to be able to use async/await everywhere
