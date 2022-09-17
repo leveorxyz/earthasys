@@ -45,6 +45,7 @@ export interface EarthasysNFTInterface extends utils.Interface {
     'balanceOf(address,uint256)': FunctionFragment;
     'balanceOfBatch(address[],uint256[])': FunctionFragment;
     'exists(uint256)': FunctionFragment;
+    'getERC20Address(string)': FunctionFragment;
     'getOnChainMetadata(uint256)': FunctionFragment;
     'getRoleAdmin(bytes32)': FunctionFragment;
     'grantRole(bytes32,address)': FunctionFragment;
@@ -82,6 +83,7 @@ export interface EarthasysNFTInterface extends utils.Interface {
       | 'balanceOf'
       | 'balanceOfBatch'
       | 'exists'
+      | 'getERC20Address'
       | 'getOnChainMetadata'
       | 'getRoleAdmin'
       | 'grantRole'
@@ -133,6 +135,7 @@ export interface EarthasysNFTInterface extends utils.Interface {
     values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
   ): string;
   encodeFunctionData(functionFragment: 'exists', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getERC20Address', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getOnChainMetadata', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
@@ -218,6 +221,7 @@ export interface EarthasysNFTInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOfBatch', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'exists', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getERC20Address', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getOnChainMetadata', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getRoleAdmin', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'grantRole', data: BytesLike): Result;
@@ -443,6 +447,8 @@ export interface EarthasysNFT extends BaseContract {
 
     exists(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[boolean]>;
 
+    getERC20Address(pollutentName: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
+
     getOnChainMetadata(
       nftID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
@@ -597,6 +603,8 @@ export interface EarthasysNFT extends BaseContract {
 
   exists(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
+  getERC20Address(pollutentName: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
+
   getOnChainMetadata(
     nftID: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
@@ -750,6 +758,8 @@ export interface EarthasysNFT extends BaseContract {
     ): Promise<BigNumber[]>;
 
     exists(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
+
+    getERC20Address(pollutentName: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     getOnChainMetadata(
       nftID: PromiseOrValue<BigNumberish>,
@@ -994,6 +1004,8 @@ export interface EarthasysNFT extends BaseContract {
 
     exists(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
+    getERC20Address(pollutentName: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
     getOnChainMetadata(nftID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -1145,6 +1157,8 @@ export interface EarthasysNFT extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     exists(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getERC20Address(pollutentName: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getOnChainMetadata(nftID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

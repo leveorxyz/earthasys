@@ -72,6 +72,10 @@ contract EarthasysNFT is
         _setURI(newuri);
     }
 
+    function getERC20Address(string memory pollutentName) public view returns (address) {
+        return _pollutantERC20Addresses[pollutentName];
+    }
+
     function pause() public onlyRole(PAUSER_ROLE) {
         _pause();
     }
