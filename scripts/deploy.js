@@ -2,6 +2,10 @@
 const { ethers, upgrades } = require('hardhat');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { writeFile } = require('fs/promises');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require('path');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { readFileSync } = require('fs');
 
 async function main() {
   const Protocol = await ethers.getContractFactory('Protocol');
@@ -19,7 +23,13 @@ async function main() {
 
   console.log('Protocol contract deployed to: ', protocol.address);
   console.log('Earthasys NFT contract deployed to: ', nft.address);
-  // write
+
+  const erc20s = JSON.parse(readFileSync(path.join(__dirname, 'data.json')));
+
+  for (const erc20 of erc20s) {
+    console.log(erc20);
+  }
+
   await writeFile(
     './src/info/data.json',
     JSON.stringify({ protocolAddress: protocol.address, nftAddress: nft.address }),
