@@ -22,7 +22,8 @@
     "**/*.tsx",
     "pages/transfers/erc20/index.tsx]",
     "hardhat.config.js",
-    "./typechain-types"
+    "./typechain-types",
+    "scripts/deploy.js"
   ],
   "exclude": ["node_modules"]
 }
