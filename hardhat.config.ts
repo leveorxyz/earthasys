@@ -1,11 +1,12 @@
-import { HardhatUserConfig } from "hardhat/config";
-import "@nomicfoundation/hardhat-toolbox";
-import "@nomiclabs/hardhat-solhint";
-import '@typechain/hardhat'
+import { HardhatUserConfig } from 'hardhat/config';
+import '@nomicfoundation/hardhat-toolbox';
+import '@nomiclabs/hardhat-solhint';
+import '@typechain/hardhat';
 import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-waffle';
-const dotenv = require('dotenv');
-const path = require('path');
+
+import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config({ path: path.resolve(__dirname, './.env') });
 
@@ -17,34 +18,34 @@ const chainIds = {
   rinkeby: 4,
   ropsten: 3,
   bsctest: 97,
-  bscmain: 56
+  bscmain: 56,
 };
 
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
-const API_KEY  = process.env.RPC_NODE_API_KEY;
-const MNEMONIC  = process.env.MNEMONIC;
-const ETHERSCAN_API_KEY  = process.env.ETHERSCAN_API_KEY as string;
+const { PRIVATE_KEY } = process.env;
+const API_KEY = process.env.RPC_NODE_API_KEY;
+const { MNEMONIC } = process.env;
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY as string;
 
-const defaultRPCNodeProvider = "infura";
+const defaultRPCNodeProvider = 'infura';
 
+// eslint-disable-next-line consistent-return
 const getRPCURL = (network: string, RPCNodeProvider: string) => {
   switch (RPCNodeProvider) {
-    case "moralis":
+    case 'moralis':
       return `https://speedy-nodes-nyc.moralis.io/${API_KEY}/eth/${network}`;
-      
-    case "alchemy":
+
+    case 'alchemy':
       return `https://eth-${network}.alchemyapi.io/v2/${API_KEY}`;
-  
-    case "infura":
+
+    case 'infura':
       return `https://${network}.infura.io/v3/${API_KEY}`;
-      
-    case "datahub":
+
+    case 'datahub':
       return `https://ethereum-${network}--rpc.datahub.figment.io//apikey/${API_KEY}`;
-      
+
     default:
-      console.error("Unknown provider:", RPCNodeProvider);
+      console.error('Unknown provider:', RPCNodeProvider);
   }
-  return;
 };
 
 const config: HardhatUserConfig = {
@@ -58,7 +59,7 @@ const config: HardhatUserConfig = {
     },
     ropsten: {
       url: getRPCURL('ropsten', defaultRPCNodeProvider),
-      accounts:  [`0x${PRIVATE_KEY}`],
+      accounts: [`0x${PRIVATE_KEY}`],
       chainId: chainIds.ropsten,
     },
     rinkeby: {
@@ -68,7 +69,7 @@ const config: HardhatUserConfig = {
     },
     kovan: {
       url: getRPCURL('kovan', defaultRPCNodeProvider),
-      accounts:  [`0x${PRIVATE_KEY}`],
+      accounts: [`0x${PRIVATE_KEY}`],
       chainId: chainIds.kovan,
     },
     goerli: {
@@ -93,6 +94,12 @@ const config: HardhatUserConfig = {
       gasPrice: 20000000000,
       accounts: [`0x${PRIVATE_KEY}`],
     },
+    fuji: {
+      url: 'https://api.avax-test.network/ext/bc/C/rpc',
+      gasPrice: 225000000000,
+      chainId: 43113,
+      accounts: [`0x${PRIVATE_KEY}`],
+    },
   },
   solidity: {
     compilers: [
@@ -111,9 +118,9 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
-      rinkeby: ETHERSCAN_API_KEY
-    }
-  }
+      rinkeby: ETHERSCAN_API_KEY,
+    },
+  },
 };
 
 export default config;
