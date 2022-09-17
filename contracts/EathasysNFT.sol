@@ -94,11 +94,17 @@ contract EarthasysNFT is
                 'Invalid arguments'
             );
         }
-        _onChainMetadata[lastId] = pollutantDetails;
+        uint256 totalPollutants = pollutantDetails.length;
+        Pollutant[] storage newPollutantDetails = _onChainMetadata[lastId];
+        for (uint256 index = 0; index < totalPollutants; index++) {
+            newPollutantDetails[index] = pollutantDetails[index];
+        }
         _mint(account, lastId, 1, data);
         lastId++;
     }
 
+    // expect to get intialAmount and targetAmount array with the previous intitalAmount and targetAmount
+    // howeven, erc20 amount is expected to reflect of the new projects
     function mintProjects(
         uint256 nftID,
         address account,
@@ -112,13 +118,20 @@ contract EarthasysNFT is
             Pollutant memory pollutant = pollutantDetails[i];
             require(
                 pollutant.intialAmounts.length == amount + _onChainMetadata[nftID][i].intialAmounts.length &&
-                    pollutant.targetAmounts.length == amount + _onChainMetadata[nftID][i].intialAmounts.length &&
+                    pollutant.targetAmounts.length == amount + _onChainMetadata[nftID][i].targetAmounts.length &&
                     _pollutantERC20Addresses[pollutant.name] != address(0),
                 'Invalid arguments'
             );
             EarthasysERC20(_pollutantERC20Addresses[pollutant.name]).mint(pollutant.erc20Amount);
         }
-        _onChainMetadata[lastId] = pollutantDetails;
+        uint256 totalPollutants = pollutantDetails.length;
+        Pollutant[] storage newPollutantDetails = _onChainMetadata[lastId];
+        for (uint256 index = 0; index < totalPollutants; index++) {
+            newPollutantDetails[index].intialAmounts = pollutantDetails[index].intialAmounts;
+            newPollutantDetails[index].targetAmounts = pollutantDetails[index].targetAmounts;
+            newPollutantDetails[index].erc20Amount += pollutantDetails[index].erc20Amount;
+        }
+        // _onChainMetadata[lastId] = pollutantDetails;
         _mint(account, nftID, amount, data);
     }
 

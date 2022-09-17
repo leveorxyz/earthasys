@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.15;
 import '@openzeppelin/contracts/access/AccessControl.sol';
-import './interfaces/INFT.sol';
+import './Interfaces/INFT.sol';
 
 contract Protocol is AccessControl {
     bytes32 public constant REGULATORY_AUTHORITY_ROLE = keccak256('REGULATORY_AUTHORITY_ROLE');
