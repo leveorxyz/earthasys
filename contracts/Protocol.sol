@@ -57,17 +57,17 @@ contract Protocol is AccessControl {
         uint256 amount,
         bytes memory data,
         INFT.Pollutant[] memory pollutantDetails,
-        bytes32 _hashedMessage1,
-        uint8 _v1,
-        bytes32 _r1,
-        bytes32 _s1,
-        bytes32 _hashedMessage2,
-        uint8 _v2,
-        bytes32 _r2,
-        bytes32 _s2
-    ) public {
-        address signer1 = VerifySignature(_hashedMessage1, _v1, _r1, _s1);
-        address signer2 = VerifySignature(_hashedMessage2, _v2, _r2, _s2);
+        bytes32[] memory _hashedMessages,
+        uint8[] memory _Vs,
+        bytes32[] memory _Rs,
+        bytes32[] memory _Ss
+    ) public // bytes32 _hashedMessage2,
+    // uint8 _v2,
+    // bytes32 _r2,
+    // bytes32 _s2
+    {
+        address signer1 = VerifySignature(_hashedMessages[0], _Vs[0], _Rs[0], _Ss[0]);
+        address signer2 = VerifySignature(_hashedMessages[0], _Vs[0], _Rs[0], _Ss[0]);
         require(isRegulator(signer1), 'Not a regulator');
         require(isOffsetter(signer2), 'Not a offsetter');
         nftContract.mintProjects(nftID, account, amount, data, pollutantDetails);
