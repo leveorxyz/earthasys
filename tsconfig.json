@@ -16,6 +16,13 @@
     "incremental": true,
     "baseUrl": "./src"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/transfers/erc20/index.tsx]", "hardhat.config.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "pages/transfers/erc20/index.tsx]",
+    "hardhat.config.js",
+    "./typechain-types"
+  ],
   "exclude": ["node_modules"]
 }
