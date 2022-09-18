@@ -1,8 +1,10 @@
-require('@nomicfoundation/hardhat-toolbox');
-require('@nomiclabs/hardhat-ethers');
-require('@nomiclabs/hardhat-waffle');
-// require('@openzeppelin/hardhat-upgrades');
-require('@typechain/hardhat');
+// eslint-disable-next-line etc/no-commented-out-code
+// import { HardhatUserConfig } from 'hardhat/config';
+import '@nomicfoundation/hardhat-toolbox';
+import '@nomiclabs/hardhat-solhint';
+import '@typechain/hardhat';
+import '@nomiclabs/hardhat-ethers';
+import '@nomiclabs/hardhat-waffle';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const dotenv = require('dotenv');
@@ -30,7 +32,7 @@ const { ETHERSCAN_API_KEY } = process.env;
 const defaultRPCNodeProvider = 'infura';
 
 // eslint-disable-next-line consistent-return
-const getRPCURL = (network, RPCNodeProvider) => {
+const getRPCURL = (network: string, RPCNodeProvider: string) => {
   switch (RPCNodeProvider) {
     case 'moralis':
       return `https://speedy-nodes-nyc.moralis.io/${API_KEY}/eth/${network}`;
