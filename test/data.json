@@ -1,27 +1,26 @@
 [
-    {
-      "PollutantName": "Carbon",
-      "tokenName": "Earthasys-Carbon",
-      "ticker": "ER-C",
-      "unitName": "ppmv",
-      "imageURI": "https://bafkreifhauccvry42szymxscrq2gxpmsqnx5sulvi5zojpm4lyhjxa7tge.ipfs.nftstorage.link/",
-      "price": 20000
-    },
-    {
-      "PollutantName": "Lead",
-      "tokenName": "Earthasys-Lead",
-      "ticker": "ER-L",
-      "unitName": "µg/m3",
-      "imageURI": "https://bafkreib5wzhlw2cw6yl6tdrfwaagtnklpwfbymug2nzyfhec3lzevz56nu.ipfs.nftstorage.link/",
-      "price": 30000
-    },
-    {
-      "PollutantName": "Dust",
-      "tokenName": "Earthasys-Dust",
-      "ticker": "ER-D",
-      "unitName": "ppm",
-      "imageURI": "https://bafkreidqlavnpatvqqdew2djv3onhsaueh2nik4gxulozji47lys7yg7pa.ipfs.nftstorage.link/",
-      "price": 10000
-    }
-  ]
-  
+  {
+    "PollutantName": "Carbon",
+    "tokenName": "Earthasys-Carbon",
+    "ticker": "ER-C",
+    "unitName": "ppmv",
+    "imageURI": "https://bafkreifhauccvry42szymxscrq2gxpmsqnx5sulvi5zojpm4lyhjxa7tge.ipfs.nftstorage.link/",
+    "price": 20000
+  },
+  {
+    "PollutantName": "Lead",
+    "tokenName": "Earthasys-Lead",
+    "ticker": "ER-L",
+    "unitName": "µg/m3",
+    "imageURI": "https://bafkreib5wzhlw2cw6yl6tdrfwaagtnklpwfbymug2nzyfhec3lzevz56nu.ipfs.nftstorage.link/",
+    "price": 30000
+  },
+  {
+    "PollutantName": "Dust",
+    "tokenName": "Earthasys-Dust",
+    "ticker": "ER-D",
+    "unitName": "ppm",
+    "imageURI": "https://bafkreidqlavnpatvqqdew2djv3onhsaueh2nik4gxulozji47lys7yg7pa.ipfs.nftstorage.link/",
+    "price": 10000
+  }
+]
