@@ -112,7 +112,7 @@ const config = {
   },
   gasReporter: {
     currency: 'USD',
-    enabled: true,
+    enabled: false,
   },
   typechain: {
     outDir: 'src/types',

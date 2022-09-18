@@ -12,8 +12,8 @@ async function main() {
   const testnetExplorerLink = 'https://testnet.snowtrace.io/address/';
 
   const protocol = await Protocol.deploy(
-    '0xd761acf92daFA3B7d2a13adf816af291A223c6f4',
-    '0xd761acf92daFA3B7d2a13adf816af291A223c6f4',
+    '0xAaC0c3338A52e5D8D98bDdf8C5C5F54e093Ac49f',
+    '0xAaC0c3338A52e5D8D98bDdf8C5C5F54e093Ac49f',
   );
 
   await protocol.deployed();
@@ -27,7 +27,7 @@ async function main() {
   console.log('Protocol contract link: ', testnetExplorerLink + protocol.address);
   console.log('Earthasys NFT contract link: ', testnetExplorerLink + nft.address);
 
-  const erc20s = JSON.parse(readFileSync(path.join(__dirname, 'data.json')));
+  const erc20s = JSON.parse(readFileSync(path.join(__dirname, 'data.json').toString()));
   for (const erc20 of erc20s) {
     // eslint-disable-next-line no-await-in-loop
     const tx = await nft.addNewERC20(
@@ -36,6 +36,7 @@ async function main() {
       erc20.ticker,
       erc20.unitName,
       erc20.imageURI,
+      erc20.price,
     );
     // eslint-disable-next-line no-await-in-loop
     await tx.wait();

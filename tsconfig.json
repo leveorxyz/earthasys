@@ -21,7 +21,7 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/transfers/erc20/index.tsx]",
-    "hardhat.config.js",
+    "hardhat.config.ts",
     "./typechain-types",
     "scripts/deploy.js"
   ],
