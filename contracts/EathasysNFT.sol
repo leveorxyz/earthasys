@@ -112,6 +112,7 @@ contract EarthasysNFT is ERC1155, AccessControl, Pausable, ERC1155Supply {
         return string(abi.encodePacked("ipfs://f0", hexstringtokenID));
     }
 
+    // TODO: Add support to mint multiple new projects
     function mintNewProject(
         address account,
         bytes memory data,
@@ -140,6 +141,7 @@ contract EarthasysNFT is ERC1155, AccessControl, Pausable, ERC1155Supply {
         allIDs.push(newNFTID);
     }
 
+  
     // expect to get intialAmount and targetAmount array with the previous intitalAmount and targetAmount
     // however, erc20 amount is expected to reflect of the new projects
     function mintProjects(
@@ -152,7 +154,8 @@ contract EarthasysNFT is ERC1155, AccessControl, Pausable, ERC1155Supply {
     ) public onlyRole(MINTER_ROLE) {
         require(exists(prevNFTID), "Project not minted");
         require(!exists(newNFTID), "Project already minted");
-        require(this._balances[prevNFTID][account] > 0, "Not the owner");
+        uint256 prevBalance = this.balanceOf(account, prevNFTID);
+        require(prevBalance > 0, "Not the owner");
         uint256 totalPolutants = pollutantDetails.length;
         for (uint256 i = 0; i < totalPolutants; i++) {
             Pollutant memory pollutant = pollutantDetails[i];
@@ -179,8 +182,8 @@ contract EarthasysNFT is ERC1155, AccessControl, Pausable, ERC1155Supply {
             newPollutantDetails[index].erc20Amount = prevPollutantDetails[index].erc20Amount + pollutantDetails[index]
                 .erc20Amount;
         }
-        uint256 prevBalance = this._balances[prevNFTID][account];
-        this._balances[prevNFTID][account] = 0;
+        
+        _burn(account, prevNFTID, prevBalance);
         // _onChainMetadata[lastId] = pollutantDetails;
         uint256 prevIndex = idIndex[prevNFTID];
         allIDs[prevIndex] = newNFTID;
@@ -189,7 +192,7 @@ contract EarthasysNFT is ERC1155, AccessControl, Pausable, ERC1155Supply {
         _mint(account, newNFTID, prevBalance+amount, data);
     }
 
-    function getAllTokenIds() public view returns(uint256[]) {
+    function getAllTokenIds() public view returns(uint256[] memory) {
         return allIDs;
     }
 
@@ -201,20 +204,20 @@ contract EarthasysNFT is ERC1155, AccessControl, Pausable, ERC1155Supply {
         return _onChainMetadata[nftID];
     }
 
-    // TODO: add on chain metadata
-    function mintBatch(
-        address to,
-        uint256[] memory amounts,
-        bytes memory data
-    ) public onlyRole(MINTER_ROLE) {
-        uint256 totalNewIds = amounts.length; //2
-        uint256 lastNewID = totalNewIds + lastId; //2
-        uint256[] memory ids = new uint256[](totalNewIds);
-        for (uint256 i = lastId; i < lastNewID; i++) {
-            ids[i - lastId] = i;
-        }
-        _mintBatch(to, ids, amounts, data);
-    }
+    // TODO: add mintbatch (might have to skip cause could be too complex)
+    // function mintBatch(
+    //     address to,
+    //     uint256[] memory amounts,
+    //     bytes memory data
+    // ) public onlyRole(MINTER_ROLE) {
+    //     uint256 totalNewIds = amounts.length; //2
+    //     uint256 lastNewID = totalNewIds + lastId; //2
+    //     uint256[] memory ids = new uint256[](totalNewIds);
+    //     for (uint256 i = lastId; i < lastNewID; i++) {
+    //         ids[i - lastId] = i;
+    //     }
+    //     _mintBatch(to, ids, amounts, data);
+    // }
 
     function _beforeTokenTransfer(
         address operator,
