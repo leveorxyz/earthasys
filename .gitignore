@@ -40,3 +40,5 @@ artifacts/
 cache/
 
 src/types
+
+frontend/node_modules

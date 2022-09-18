@@ -44,6 +44,7 @@ yarn install
 🚴‍♂️ Run your App:
 
 ```sh
+cd frontend
 yarn start
 ```
 
