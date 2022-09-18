@@ -44,15 +44,17 @@ contract Protocol is AccessControl {
 
     function addNewProject(
         address account,
+        uint256 nftID,
         bytes memory data,
         INFT.Pollutant[] memory pollutantDetails
     ) public {
         require(isRegulator(msg.sender), 'Not a regulator');
-        nftContract.mintNewProject(account, data, pollutantDetails);
+        nftContract.mintNewProject(account, nftID, data, pollutantDetails);
     }
 
     function instantiateNewProjects(
-        uint256 nftID,
+        uint256 prevNFTID,
+        uint256 newNFTID,
         address account,
         uint256 amount,
         bytes memory data,
@@ -70,6 +72,6 @@ contract Protocol is AccessControl {
         address signer2 = VerifySignature(_hashedMessages[0], _Vs[0], _Rs[0], _Ss[0]);
         require(isRegulator(signer1), 'Not a regulator');
         require(isOffsetter(signer2), 'Not a offsetter');
-        nftContract.mintProjects(nftID, account, amount, data, pollutantDetails);
+        nftContract.mintProjects(prevNFTID, newNFTID, account, amount, data, pollutantDetails);
     }
 }
