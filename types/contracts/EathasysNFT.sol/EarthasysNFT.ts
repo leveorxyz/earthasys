@@ -59,15 +59,15 @@ export interface EarthasysNFTInterface extends utils.Interface {
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
     "exists(uint256)": FunctionFragment;
+    "getAllTokenIds()": FunctionFragment;
     "getERC20Address(string)": FunctionFragment;
     "getOnChainMetadata(uint256)": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
-    "mintBatch(address,uint256[],bytes)": FunctionFragment;
-    "mintNewProject(address,bytes,(string,uint256,uint256[],uint256[])[])": FunctionFragment;
-    "mintProjects(uint256,address,uint256,bytes,(string,uint256,uint256[],uint256[])[])": FunctionFragment;
+    "mintNewProject(address,bytes,uint256,(string,uint256,uint256[],uint256[])[])": FunctionFragment;
+    "mintProjects(uint256,uint256,address,uint256,bytes,(string,uint256,uint256[],uint256[])[])": FunctionFragment;
     "pause()": FunctionFragment;
     "paused()": FunctionFragment;
     "renounceRole(bytes32,address)": FunctionFragment;
@@ -78,6 +78,7 @@ export interface EarthasysNFTInterface extends utils.Interface {
     "setURI(string)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "totalSupply(uint256)": FunctionFragment;
+    "uint2hexstr(uint256)": FunctionFragment;
     "unpause()": FunctionFragment;
     "uri(uint256)": FunctionFragment;
   };
@@ -93,13 +94,13 @@ export interface EarthasysNFTInterface extends utils.Interface {
       | "balanceOf"
       | "balanceOfBatch"
       | "exists"
+      | "getAllTokenIds"
       | "getERC20Address"
       | "getOnChainMetadata"
       | "getRoleAdmin"
       | "grantRole"
       | "hasRole"
       | "isApprovedForAll"
-      | "mintBatch"
       | "mintNewProject"
       | "mintProjects"
       | "pause"
@@ -112,6 +113,7 @@ export interface EarthasysNFTInterface extends utils.Interface {
       | "setURI"
       | "supportsInterface"
       | "totalSupply"
+      | "uint2hexstr"
       | "unpause"
       | "uri"
   ): FunctionFragment;
@@ -160,6 +162,10 @@ export interface EarthasysNFTInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
+    functionFragment: "getAllTokenIds",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "getERC20Address",
     values: [PromiseOrValue<string>]
   ): string;
@@ -184,24 +190,18 @@ export interface EarthasysNFTInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "mintBatch",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BytesLike>
-    ]
-  ): string;
-  encodeFunctionData(
     functionFragment: "mintNewProject",
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
       EarthasysNFT.PollutantStruct[]
     ]
   ): string;
   encodeFunctionData(
     functionFragment: "mintProjects",
     values: [
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
@@ -255,6 +255,10 @@ export interface EarthasysNFTInterface extends utils.Interface {
     functionFragment: "totalSupply",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(
+    functionFragment: "uint2hexstr",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "uri",
@@ -292,6 +296,10 @@ export interface EarthasysNFTInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "exists", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "getAllTokenIds",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getERC20Address",
     data: BytesLike
   ): Result;
@@ -309,7 +317,6 @@ export interface EarthasysNFTInterface extends utils.Interface {
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "mintBatch", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "mintNewProject",
     data: BytesLike
@@ -344,6 +351,10 @@ export interface EarthasysNFTInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "uint2hexstr",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "unpause", data: BytesLike): Result;
@@ -535,6 +546,8 @@ export interface EarthasysNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    getAllTokenIds(overrides?: CallOverrides): Promise<[BigNumber[]]>;
+
     getERC20Address(
       pollutentName: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -568,22 +581,17 @@ export interface EarthasysNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    mintBatch(
-      to: PromiseOrValue<string>,
-      amounts: PromiseOrValue<BigNumberish>[],
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     mintNewProject(
       account: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
+      newNFTID: PromiseOrValue<BigNumberish>,
       pollutantDetails: EarthasysNFT.PollutantStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     mintProjects(
-      nftID: PromiseOrValue<BigNumberish>,
+      prevNFTID: PromiseOrValue<BigNumberish>,
+      newNFTID: PromiseOrValue<BigNumberish>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
@@ -648,12 +656,17 @@ export interface EarthasysNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    uint2hexstr(
+      i: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     unpause(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     uri(
-      arg0: PromiseOrValue<BigNumberish>,
+      _tokenID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string]>;
   };
@@ -695,6 +708,8 @@ export interface EarthasysNFT extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  getAllTokenIds(overrides?: CallOverrides): Promise<BigNumber[]>;
+
   getERC20Address(
     pollutentName: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -728,22 +743,17 @@ export interface EarthasysNFT extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  mintBatch(
-    to: PromiseOrValue<string>,
-    amounts: PromiseOrValue<BigNumberish>[],
-    data: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   mintNewProject(
     account: PromiseOrValue<string>,
     data: PromiseOrValue<BytesLike>,
+    newNFTID: PromiseOrValue<BigNumberish>,
     pollutantDetails: EarthasysNFT.PollutantStruct[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   mintProjects(
-    nftID: PromiseOrValue<BigNumberish>,
+    prevNFTID: PromiseOrValue<BigNumberish>,
+    newNFTID: PromiseOrValue<BigNumberish>,
     account: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     data: PromiseOrValue<BytesLike>,
@@ -808,12 +818,17 @@ export interface EarthasysNFT extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  uint2hexstr(
+    i: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
   unpause(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   uri(
-    arg0: PromiseOrValue<BigNumberish>,
+    _tokenID: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string>;
 
@@ -855,6 +870,8 @@ export interface EarthasysNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    getAllTokenIds(overrides?: CallOverrides): Promise<BigNumber[]>;
+
     getERC20Address(
       pollutentName: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -888,22 +905,17 @@ export interface EarthasysNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    mintBatch(
-      to: PromiseOrValue<string>,
-      amounts: PromiseOrValue<BigNumberish>[],
-      data: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     mintNewProject(
       account: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
+      newNFTID: PromiseOrValue<BigNumberish>,
       pollutantDetails: EarthasysNFT.PollutantStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     mintProjects(
-      nftID: PromiseOrValue<BigNumberish>,
+      prevNFTID: PromiseOrValue<BigNumberish>,
+      newNFTID: PromiseOrValue<BigNumberish>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
@@ -966,10 +978,15 @@ export interface EarthasysNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    uint2hexstr(
+      i: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     unpause(overrides?: CallOverrides): Promise<void>;
 
     uri(
-      arg0: PromiseOrValue<BigNumberish>,
+      _tokenID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
   };
@@ -1100,6 +1117,8 @@ export interface EarthasysNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getAllTokenIds(overrides?: CallOverrides): Promise<BigNumber>;
+
     getERC20Address(
       pollutentName: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1133,22 +1152,17 @@ export interface EarthasysNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    mintBatch(
-      to: PromiseOrValue<string>,
-      amounts: PromiseOrValue<BigNumberish>[],
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     mintNewProject(
       account: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
+      newNFTID: PromiseOrValue<BigNumberish>,
       pollutantDetails: EarthasysNFT.PollutantStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     mintProjects(
-      nftID: PromiseOrValue<BigNumberish>,
+      prevNFTID: PromiseOrValue<BigNumberish>,
+      newNFTID: PromiseOrValue<BigNumberish>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
@@ -1213,12 +1227,17 @@ export interface EarthasysNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    uint2hexstr(
+      i: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     unpause(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     uri(
-      arg0: PromiseOrValue<BigNumberish>,
+      _tokenID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -1263,6 +1282,8 @@ export interface EarthasysNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getAllTokenIds(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     getERC20Address(
       pollutentName: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1296,22 +1317,17 @@ export interface EarthasysNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    mintBatch(
-      to: PromiseOrValue<string>,
-      amounts: PromiseOrValue<BigNumberish>[],
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     mintNewProject(
       account: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
+      newNFTID: PromiseOrValue<BigNumberish>,
       pollutantDetails: EarthasysNFT.PollutantStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     mintProjects(
-      nftID: PromiseOrValue<BigNumberish>,
+      prevNFTID: PromiseOrValue<BigNumberish>,
+      newNFTID: PromiseOrValue<BigNumberish>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
@@ -1376,12 +1392,17 @@ export interface EarthasysNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    uint2hexstr(
+      i: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     unpause(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     uri(
-      arg0: PromiseOrValue<BigNumberish>,
+      _tokenID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
