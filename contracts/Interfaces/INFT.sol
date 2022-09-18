@@ -11,12 +11,14 @@ interface INFT {
 
     function mintNewProject(
         address account,
+        uint256 nftID,
         bytes memory data,
         Pollutant[] memory pollutantDetails
     ) external;
 
     function mintProjects(
-        uint256 nftID,
+        uint256 prevNFTID,
+        uint256 newnNFTID,
         address account,
         uint256 amount,
         bytes memory data,
