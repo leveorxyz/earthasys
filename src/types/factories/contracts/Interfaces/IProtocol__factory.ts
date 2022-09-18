@@ -2,48 +2,51 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from 'ethers';
-import type { Provider } from '@ethersproject/providers';
-import type { IProtocol, IProtocolInterface } from '../../../contracts/Interfaces/IProtocol';
+import { Contract, Signer, utils } from "ethers";
+import type { Provider } from "@ethersproject/providers";
+import type {
+  IProtocol,
+  IProtocolInterface,
+} from "../../../contracts/Interfaces/IProtocol";
 
 const _abi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: 'addressToCheck',
-        type: 'address',
+        internalType: "address",
+        name: "addressToCheck",
+        type: "address",
       },
     ],
-    name: 'isOffsetter',
+    name: "isOffsetter",
     outputs: [
       {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
+        internalType: "bool",
+        name: "",
+        type: "bool",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [
       {
-        internalType: 'address',
-        name: 'addressToCheck',
-        type: 'address',
+        internalType: "address",
+        name: "addressToCheck",
+        type: "address",
       },
     ],
-    name: 'isRegulator',
+    name: "isRegulator",
     outputs: [
       {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
+        internalType: "bool",
+        name: "",
+        type: "bool",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
 ];
 
@@ -52,7 +55,10 @@ export class IProtocol__factory {
   static createInterface(): IProtocolInterface {
     return new utils.Interface(_abi) as IProtocolInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): IProtocol {
+  static connect(
+    address: string,
+    signerOrProvider: Signer | Provider
+  ): IProtocol {
     return new Contract(address, _abi, signerOrProvider) as IProtocol;
   }
 }

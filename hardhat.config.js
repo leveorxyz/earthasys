@@ -1,8 +1,8 @@
 require('@nomicfoundation/hardhat-toolbox');
-require('@typechain/hardhat');
-require('@typechain/hardhat');
 require('@nomiclabs/hardhat-ethers');
 require('@nomiclabs/hardhat-waffle');
+// require('@openzeppelin/hardhat-upgrades');
+require('@typechain/hardhat');
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const dotenv = require('dotenv');
