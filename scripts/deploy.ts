@@ -25,11 +25,12 @@ async function main() {
   console.log('Protocol contract link: ', testnetExplorerLink + protocol.address);
   console.log('Earthasys NFT contract link: ', testnetExplorerLink + nft.address);
 
-  const ERC20Addresses = {
-    "Carbon": "0x4c9F85aC612507E93E6B94106E90b083A87E2495",
-    "Lead": "0x3D3736Cb1f5aC304CDb2FAB2db6e70c629E382Aa",
-    "Dust": "0x9b9cd543DC1586c053e566F16390DCc7A76902Fd"
-  };
+  // const ERC20Addresses = {
+  //   "Carbon": "0x4c9F85aC612507E93E6B94106E90b083A87E2495",
+  //   "Lead": "0x3D3736Cb1f5aC304CDb2FAB2db6e70c629E382Aa",
+  //   "Dust": "0x9b9cd543DC1586c053e566F16390DCc7A76902Fd"
+  // };
+  const ERC20Addresses  = {};
   const erc20s = JSON.parse(readFileSync(path.join(__dirname, 'data.json').toString()));
   for (const erc20 of erc20s) {
     // eslint-disable-next-line no-await-in-loop

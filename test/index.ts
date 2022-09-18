@@ -3,11 +3,11 @@ import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { expect } from "chai";
 import { ethers, waffle} from 'hardhat';
 import EarthasysNFTArtifacts from '../artifacts/contracts/EathasysNFT.sol/EarthasysNFT.json';
-import {EarthasysNFT} from '../frontend/src/types/contracts/EathasysNFT.sol/EarthasysNFT';
+import {EarthasysNFT} from '../types/contracts/EathasysNFT.sol/EarthasysNFT';
 import EarthasysERC20Artifacts from '../artifacts/contracts/EarthasysERC20.sol/EarthasysERC20.json';
-import {EarthasysERC20} from '../frontend/src/types/contracts/EarthasysERC20';
+import {EarthasysERC20} from '../types/contracts/EarthasysERC20';
 import EarthasysProtocolArtifacts from '../artifacts/contracts/Protocol.sol/Protocol.json';
-import {Protocol} from '../frontend/src/types/contracts/Protocol';
+import {Protocol} from '../types/contracts/Protocol';
 import {readFileSync} from 'fs';
 import path from "path";
 
@@ -59,12 +59,12 @@ describe("Earthasys tests", () => {
  
     });
 
-    // it("Check if greet can be updated", async () => {
-    //   const { greeter, owner } = await loadFixture(deployOnceFixture);
-    //   let tx = await greeter.connect(owner).setGreeting("Hello, universe!");
-    //   (await tx).wait();
-    //   expect(await greeter.greet()).to.be.eq("Hello, universe!");
-    // });
+    it("Check if greet can be updated", async () => {
+      const { earthasysProtocol, earthasysNFT } = await loadFixture(deployOnceFixture);
+      let tx = await greeter.connect(owner).setGreeting("Hello, universe!");
+      (await tx).wait();
+      expect(await greeter.greet()).to.be.eq("Hello, universe!");
+    });
 
     // it("Check if not owner cant change greet", async () => {
     //   const { greeter, owner, otherAccounts } = await loadFixture(deployOnceFixture);

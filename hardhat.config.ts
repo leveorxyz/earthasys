@@ -117,7 +117,7 @@ const config = {
     enabled: false,
   },
   typechain: {
-    outDir: 'frontend/src/types',
+    outDir: 'types',
     target: 'ethers-v5',
     // eslint-disable-next-line no-inline-comments
     alwaysGenerateOverloads: false, // should overloads with full signatures like deposit(uint256) be generated always, even if there are no overloads?
