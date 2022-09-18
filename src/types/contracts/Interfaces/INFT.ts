@@ -12,16 +12,10 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "../../common";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from '../../common';
 
 export declare namespace INFT {
   export type PollutantStruct = {
@@ -39,41 +33,29 @@ export declare namespace INFT {
 
 export interface INFTInterface extends utils.Interface {
   functions: {
-    "mintNewProject(address,bytes,(string,uint256[],uint256[])[])": FunctionFragment;
-    "mintProjects(uint256,address,uint256,bytes,(string,uint256[],uint256[])[])": FunctionFragment;
+    'mintNewProject(address,bytes,(string,uint256[],uint256[])[])': FunctionFragment;
+    'mintProjects(uint256,address,uint256,bytes,(string,uint256[],uint256[])[])': FunctionFragment;
   };
 
-  getFunction(
-    nameOrSignatureOrTopic: "mintNewProject" | "mintProjects"
-  ): FunctionFragment;
+  getFunction(nameOrSignatureOrTopic: 'mintNewProject' | 'mintProjects'): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "mintNewProject",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BytesLike>,
-      INFT.PollutantStruct[]
-    ]
+    functionFragment: 'mintNewProject',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>, INFT.PollutantStruct[]],
   ): string;
   encodeFunctionData(
-    functionFragment: "mintProjects",
+    functionFragment: 'mintProjects',
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BytesLike>,
-      INFT.PollutantStruct[]
-    ]
+      INFT.PollutantStruct[],
+    ],
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "mintNewProject",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "mintProjects",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'mintNewProject', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mintProjects', data: BytesLike): Result;
 
   events: {};
 }
@@ -88,16 +70,12 @@ export interface INFT extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -109,7 +87,7 @@ export interface INFT extends BaseContract {
       account: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
       pollutantDetails: INFT.PollutantStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     mintProjects(
@@ -118,7 +96,7 @@ export interface INFT extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
       pollutantDetails: INFT.PollutantStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -126,7 +104,7 @@ export interface INFT extends BaseContract {
     account: PromiseOrValue<string>,
     data: PromiseOrValue<BytesLike>,
     pollutantDetails: INFT.PollutantStruct[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   mintProjects(
@@ -135,7 +113,7 @@ export interface INFT extends BaseContract {
     amount: PromiseOrValue<BigNumberish>,
     data: PromiseOrValue<BytesLike>,
     pollutantDetails: INFT.PollutantStruct[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -143,7 +121,7 @@ export interface INFT extends BaseContract {
       account: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
       pollutantDetails: INFT.PollutantStruct[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     mintProjects(
@@ -152,7 +130,7 @@ export interface INFT extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
       pollutantDetails: INFT.PollutantStruct[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
   };
 
@@ -163,7 +141,7 @@ export interface INFT extends BaseContract {
       account: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
       pollutantDetails: INFT.PollutantStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     mintProjects(
@@ -172,7 +150,7 @@ export interface INFT extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
       pollutantDetails: INFT.PollutantStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -181,7 +159,7 @@ export interface INFT extends BaseContract {
       account: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
       pollutantDetails: INFT.PollutantStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     mintProjects(
@@ -190,7 +168,7 @@ export interface INFT extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
       pollutantDetails: INFT.PollutantStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }
