@@ -3,11 +3,11 @@ import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { expect } from "chai";
 import { ethers, waffle} from 'hardhat';
 import EarthasysNFTArtifacts from '../artifacts/contracts/EathasysNFT.sol/EarthasysNFT.json';
-import {EarthasysNFT} from '../src/types/contracts/EathasysNFT.sol/EarthasysNFT';
+import {EarthasysNFT} from '../frontend/src/types/contracts/EathasysNFT.sol/EarthasysNFT';
 import EarthasysERC20Artifacts from '../artifacts/contracts/EarthasysERC20.sol/EarthasysERC20.json';
-import {EarthasysERC20} from '../src/types/contracts/EarthasysERC20';
+import {EarthasysERC20} from '../frontend/src/types/contracts/EarthasysERC20';
 import EarthasysProtocolArtifacts from '../artifacts/contracts/Protocol.sol/Protocol.json';
-import {Protocol} from '../src/types/contracts/Protocol';
+import {Protocol} from '../frontend/src/types/contracts/Protocol';
 import {readFileSync} from 'fs';
 import path from "path";
 

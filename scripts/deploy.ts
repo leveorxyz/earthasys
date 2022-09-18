@@ -1,10 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+
 const { ethers } = require('hardhat');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { writeFile } = require('fs/promises');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { readFileSync } = require('fs');
 
 async function main() {
