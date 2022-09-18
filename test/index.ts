@@ -8,6 +8,7 @@ import EarthasysERC20Artifacts from '../artifacts/contracts/EarthasysERC20.sol/E
 import {EarthasysERC20} from '../types/contracts/EarthasysERC20';
 import EarthasysProtocolArtifacts from '../artifacts/contracts/Protocol.sol/Protocol.json';
 import {Protocol} from '../types/contracts/Protocol';
+import { NFTStorage, File } from "nft.storage";
 import {readFileSync} from 'fs';
 import path from "path";
 
