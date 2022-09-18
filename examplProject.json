@@ -1,0 +1,33 @@
+{
+    "index": 6,
+    "guid": "32ec535a-e619-4454-8cd2-7acf1e1a59b6",
+    "picture": "https://i.ytimg.com/vi/GpHsfGm6hGk/sddefault.jpg",
+    "ProjectName": "Gro Intelligence",
+    "description": "We illuminate the interrelationships between the Earth's ecology and the global economy, so you can develop a holistic understanding of how your end-to-end business is impacted - and act on these insights. Curated by human intelligence and scaled through artificial intelligence, our system is built to give you the honest answers to your specific situation.\r\n",
+    "ProjectDirector": "Annie Mann",
+    "gender": "female",
+    "company": "ECRATER",
+    "email": "anniemann@ecrater.com",
+    "phone": "+1 (904) 435-3646",
+    "address": "270 Farragut Place, Coyote, Northern Mariana Islands, 311",
+    "budget": "$2,876.78",
+    "startDate": "2022-12-16T08:02:05 -06:00",
+    "DD": "14.3934 59.9222",
+    "DMS": "336°5'29.1133\"N 270°8'3.0571E",
+    "DMM": "352° 5.8319, 93° 2.8924",
+    "tags": [
+      "carbon",
+      "offset",
+      "ai"
+    ],
+    "pollutants": [
+        {
+            "pollutantName": "Carbon",
+            "unitName": "Kiloton",
+            "amount": 500,
+            "intialAmount": 513.0565,
+            "targetAmlunt": 166.0878
+        }
+      ]
+    
+  }
