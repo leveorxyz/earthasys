@@ -25,9 +25,9 @@ describe("Earthasys tests", () => {
     const [owner, ...otherAccounts] = await ethers.getSigners();
 
     // eslint-disable-next-line prefer-const
-    earthasysProtocol = (await deployContract(owner, EarthasysProtocolArtifacts, ['0xAaC0c3338A52e5D8D98bDdf8C5C5F54e093Ac49f', '0xAaC0c3338A52e5D8D98bDdf8C5C5F54e093Ac49f'])) as Protocol;
+    earthasysProtocol = (await deployContract(owner, EarthasysProtocolArtifacts, ["0xAaC0c3338A52e5D8D98bDdf8C5C5F54e093Ac49f", "0xAaC0c3338A52e5D8D98bDdf8C5C5F54e093Ac49f"])) as Protocol;
     // eslint-disable-next-line prefer-const
-    earthasysNFT = (await deployContract(owner, EarthasysNFTArtifacts, ['0xAaC0c3338A52e5D8D98bDdf8C5C5F54e093Ac49f', '0xAaC0c3338A52e5D8D98bDdf8C5C5F54e093Ac49f'])) as EarthasysNFT;
+    earthasysNFT = (await deployContract(owner, EarthasysNFTArtifacts, [earthasysProtocol.address])) as EarthasysNFT;
 
   const erc20s = JSON.parse(readFileSync(path.join(__dirname, 'data.json')).toString());
   for (const erc20 of erc20s) {
@@ -43,7 +43,7 @@ describe("Earthasys tests", () => {
     // eslint-disable-next-line no-await-in-loop
     await tx.wait();
     // eslint-disable-next-line prefer-template, no-await-in-loop
-    console.log(erc20.PollutantName + ' ERC20 of address' + (await earthasysNFT.getERC20Address(erc20.PollutantName)));
+    console.log(erc20.PollutantName + ' ERC20 of address ' + (await earthasysNFT.getERC20Address(erc20.PollutantName)));
   }
 
     return { earthasysProtocol, earthasysNFT, owner, otherAccounts };
