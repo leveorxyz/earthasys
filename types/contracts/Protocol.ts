@@ -46,12 +46,12 @@ export interface ProtocolInterface extends utils.Interface {
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
     "OFFSETTER_ROLE()": FunctionFragment;
     "REGULATORY_AUTHORITY_ROLE()": FunctionFragment;
-    "addNewProject(address,bytes,(string,uint256[],uint256[])[])": FunctionFragment;
+    "addNewProject(address,uint256,bytes,(string,uint256[],uint256[])[])": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
     "initialize(address)": FunctionFragment;
-    "instantiateNewProjects(uint256,address,uint256,bytes,(string,uint256[],uint256[])[],bytes32[],uint8[],bytes32[],bytes32[])": FunctionFragment;
+    "instantiateNewProjects(uint256,uint256,address,uint256,bytes,(string,uint256[],uint256[])[],bytes32[],uint8[],bytes32[],bytes32[])": FunctionFragment;
     "isOffsetter(address)": FunctionFragment;
     "isRegulator(address)": FunctionFragment;
     "renounceRole(bytes32,address)": FunctionFragment;
@@ -93,6 +93,7 @@ export interface ProtocolInterface extends utils.Interface {
     functionFragment: "addNewProject",
     values: [
       PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BytesLike>,
       INFT.PollutantStruct[]
     ]
@@ -116,6 +117,7 @@ export interface ProtocolInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "instantiateNewProjects",
     values: [
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
@@ -276,6 +278,7 @@ export interface Protocol extends BaseContract {
 
     addNewProject(
       account: PromiseOrValue<string>,
+      nftID: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
       pollutantDetails: INFT.PollutantStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -304,7 +307,8 @@ export interface Protocol extends BaseContract {
     ): Promise<ContractTransaction>;
 
     instantiateNewProjects(
-      nftID: PromiseOrValue<BigNumberish>,
+      prevNFTID: PromiseOrValue<BigNumberish>,
+      newNFTID: PromiseOrValue<BigNumberish>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
@@ -352,6 +356,7 @@ export interface Protocol extends BaseContract {
 
   addNewProject(
     account: PromiseOrValue<string>,
+    nftID: PromiseOrValue<BigNumberish>,
     data: PromiseOrValue<BytesLike>,
     pollutantDetails: INFT.PollutantStruct[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -380,7 +385,8 @@ export interface Protocol extends BaseContract {
   ): Promise<ContractTransaction>;
 
   instantiateNewProjects(
-    nftID: PromiseOrValue<BigNumberish>,
+    prevNFTID: PromiseOrValue<BigNumberish>,
+    newNFTID: PromiseOrValue<BigNumberish>,
     account: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     data: PromiseOrValue<BytesLike>,
@@ -428,6 +434,7 @@ export interface Protocol extends BaseContract {
 
     addNewProject(
       account: PromiseOrValue<string>,
+      nftID: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
       pollutantDetails: INFT.PollutantStruct[],
       overrides?: CallOverrides
@@ -456,7 +463,8 @@ export interface Protocol extends BaseContract {
     ): Promise<void>;
 
     instantiateNewProjects(
-      nftID: PromiseOrValue<BigNumberish>,
+      prevNFTID: PromiseOrValue<BigNumberish>,
+      newNFTID: PromiseOrValue<BigNumberish>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
@@ -540,6 +548,7 @@ export interface Protocol extends BaseContract {
 
     addNewProject(
       account: PromiseOrValue<string>,
+      nftID: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
       pollutantDetails: INFT.PollutantStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -568,7 +577,8 @@ export interface Protocol extends BaseContract {
     ): Promise<BigNumber>;
 
     instantiateNewProjects(
-      nftID: PromiseOrValue<BigNumberish>,
+      prevNFTID: PromiseOrValue<BigNumberish>,
+      newNFTID: PromiseOrValue<BigNumberish>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
@@ -621,6 +631,7 @@ export interface Protocol extends BaseContract {
 
     addNewProject(
       account: PromiseOrValue<string>,
+      nftID: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
       pollutantDetails: INFT.PollutantStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -649,7 +660,8 @@ export interface Protocol extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     instantiateNewProjects(
-      nftID: PromiseOrValue<BigNumberish>,
+      prevNFTID: PromiseOrValue<BigNumberish>,
+      newNFTID: PromiseOrValue<BigNumberish>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
