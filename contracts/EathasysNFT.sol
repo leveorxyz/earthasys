@@ -189,6 +189,10 @@ contract EarthasysNFT is ERC1155, AccessControl, Pausable, ERC1155Supply {
         _mint(account, newNFTID, prevBalance+amount, data);
     }
 
+    function getAllTokenIds() public view returns(uint256[]) {
+        return allIDs;
+    }
+
     function getOnChainMetadata(uint256 nftID)
         public
         view
