@@ -1,7 +1,8 @@
 [
   {
     "guid": "90e67b43-832f-48bd-832b-4645f4b97303",
-    "ProjectName": "Irure",
+    "name": "Irure",
+    "image": "https://static.vecteezy.com/system/resources/previews/002/850/160/non_2x/modern-green-background-free-vector.jpg",
     "description": "When buying clothes online, we are not aware of the big impact this has on our climate. However, fashion makes a sizeable contribution to climate change. It is important that the fashion industry acts to reduce its greenhouse-gas emissions. We want customers to be able to make a choice and offset the emissions of their purchased products.\r\n",
     "projectInstances": [
       {
@@ -56,7 +57,7 @@
   },
   {
     "guid": "3af7e15b-d6a5-42a6-bebd-6ed25c916d35",
-    "ProjectName": "consequat",
+    "name": "consequat",
     "description": "The forestry profession encompasses the science and practice of establishing, managing, using, and conserving forests, trees and associated resources in a sustainable manner to meet desired goals, needs, and values.\r\n",
     "projectInstances": [
       {
@@ -89,7 +90,7 @@
   },
   {
     "guid": "68dc6358-9221-4115-810b-89b972cd2088",
-    "ProjectName": "Occaecat",
+    "name": "Occaecat",
     "description": "The International Blue Carbon Initiative is a coordinated, global program focused on mitigating climate change through the conservation and restoration of coastal and marine ecosystems.\r\n",
     "projectInstances": [
       {
@@ -144,7 +145,7 @@
   },
   {
     "guid": "189ddc5d-88d1-410f-8bd0-a13a1b714f0b",
-    "ProjectName": "Indigo",
+    "name": "Indigo",
     "description": "Carbon by Indigo supports you in adopting practices that are good for your farm – and helps you get paid for the carbon credits you generate Adding cover crops, reducing tillage, and other practices can help benefit your soil and your bottom line. Through Carbon by Indigo, increased soil carbon sequestration and reduced greenhouse gas emissions from these practices can also generate registry-issued carbon credits, which are increasingly in demand by major corporations. \r\n",
     "projectInstances": [
       {
@@ -192,7 +193,7 @@
   },
   {
     "guid": "ead23662-424d-442f-a7a1-949ff1d11514",
-    "ProjectName": "EcoAct",
+    "name": "EcoAct",
     "description": "Our award-winning cleaner cookstoves offsetting project is the first registered carbon credit project in Sudan and the first to be developed in a conflict zone. It is reducing emissions whilst helping families to breathe cleaner indoor air.\r\n",
     "projectInstances": [
       {
@@ -241,7 +242,7 @@
   },
   {
     "guid": "b3b4ba37-d957-473a-8416-1a875a9f0a7c",
-    "ProjectName": "Climate Plan",
+    "name": "Climate Plan",
     "description": "We compensate for carbon emissions through, for example, afforestation efforts and the expansion of renewable energies. Independent organisations monitor the precise amounts of carbon saved, which are then sold in the form of CO2 reduction certificates, which in turn finance the project. Projects that can be carried out without this financial support are not recognised as a carbon offset project..\r\n",
     "projectInstances": [
       {
