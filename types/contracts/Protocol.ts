@@ -46,6 +46,7 @@ export interface ProtocolInterface extends utils.Interface {
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
     "OFFSETTER_ROLE()": FunctionFragment;
     "REGULATORY_AUTHORITY_ROLE()": FunctionFragment;
+    "VerifySignature(bytes32,uint8,bytes32,bytes32)": FunctionFragment;
     "addNewProject(address,uint256,bytes,(string,uint256[],uint256[])[])": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
@@ -64,6 +65,7 @@ export interface ProtocolInterface extends utils.Interface {
       | "DEFAULT_ADMIN_ROLE"
       | "OFFSETTER_ROLE"
       | "REGULATORY_AUTHORITY_ROLE"
+      | "VerifySignature"
       | "addNewProject"
       | "getRoleAdmin"
       | "grantRole"
@@ -88,6 +90,15 @@ export interface ProtocolInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "REGULATORY_AUTHORITY_ROLE",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "VerifySignature",
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "addNewProject",
@@ -160,6 +171,10 @@ export interface ProtocolInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "REGULATORY_AUTHORITY_ROLE",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "VerifySignature",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -276,6 +291,14 @@ export interface Protocol extends BaseContract {
 
     REGULATORY_AUTHORITY_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
+    VerifySignature(
+      _hashedMessage: PromiseOrValue<BytesLike>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     addNewProject(
       account: PromiseOrValue<string>,
       nftID: PromiseOrValue<BigNumberish>,
@@ -354,6 +377,14 @@ export interface Protocol extends BaseContract {
 
   REGULATORY_AUTHORITY_ROLE(overrides?: CallOverrides): Promise<string>;
 
+  VerifySignature(
+    _hashedMessage: PromiseOrValue<BytesLike>,
+    _v: PromiseOrValue<BigNumberish>,
+    _r: PromiseOrValue<BytesLike>,
+    _s: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
   addNewProject(
     account: PromiseOrValue<string>,
     nftID: PromiseOrValue<BigNumberish>,
@@ -431,6 +462,14 @@ export interface Protocol extends BaseContract {
     OFFSETTER_ROLE(overrides?: CallOverrides): Promise<string>;
 
     REGULATORY_AUTHORITY_ROLE(overrides?: CallOverrides): Promise<string>;
+
+    VerifySignature(
+      _hashedMessage: PromiseOrValue<BytesLike>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     addNewProject(
       account: PromiseOrValue<string>,
@@ -546,6 +585,14 @@ export interface Protocol extends BaseContract {
 
     REGULATORY_AUTHORITY_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
+    VerifySignature(
+      _hashedMessage: PromiseOrValue<BytesLike>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     addNewProject(
       account: PromiseOrValue<string>,
       nftID: PromiseOrValue<BigNumberish>,
@@ -626,6 +673,14 @@ export interface Protocol extends BaseContract {
     OFFSETTER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     REGULATORY_AUTHORITY_ROLE(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    VerifySignature(
+      _hashedMessage: PromiseOrValue<BytesLike>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

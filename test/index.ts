@@ -11,6 +11,7 @@ import {Protocol} from '../types/contracts/Protocol';
 import { NFTStorage, File } from "nft.storage";
 import {readFileSync} from 'fs';
 import path from "path";
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
 const {deployContract} = waffle;
 
@@ -52,19 +53,39 @@ describe("Earthasys tests", () => {
 
   // eslint-disable-next-line no-undef
   describe("Test suite", () => {
+
+    async function signMessage(signer: SignerWithAddress) {
+
+      let messageHash = ethers.utils.id("Earthasys");
+
+      let messageHashBytes = ethers.utils.arrayify(messageHash)
+
+      // Sign the binary data
+      let flatSig = await signer.signMessage(messageHashBytes);
+
+      // For Solidity, we need the expanded-format of a signature
+      let sig = ethers.utils.splitSignature(flatSig);
+   
+      // split signature
+      const v = sig.v;
+      const r = sig.r;
+      const s = sig.s;
+
+      return {messageHashBytes,  v, r, s }
+    }
     // eslint-disable-next-line no-undef
-    it("Should deploy all contracts", async () => {
+    it("Should deploy all contracts owner", async () => {
       const { earthasysProtocol, earthasysNFT } = await loadFixture(deployOnceFixture);
       console.log(earthasysProtocol.address);
       console.log(earthasysNFT.address);
  
     });
 
-    it("Check if greet can be updated", async () => {
-      const { earthasysProtocol, earthasysNFT } = await loadFixture(deployOnceFixture);
-      let tx = await greeter.connect(owner).setGreeting("Hello, universe!");
-      (await tx).wait();
-      expect(await greeter.greet()).to.be.eq("Hello, universe!");
+    it.only("Should verify message", async () => {
+      const { owner, earthasysProtocol, earthasysNFT } = await loadFixture(deployOnceFixture);
+      const {messageHashBytes, v, r, s} =await signMessage(owner);
+ 
+       expect(await earthasysProtocol.VerifySignature(messageHashBytes, v, r, s)).to.be.eq(owner.address);
     });
 
     // it("Check if not owner cant change greet", async () => {
