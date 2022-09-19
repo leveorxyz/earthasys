@@ -27,11 +27,11 @@ import type {
   PromiseOrValue,
 } from "../../common";
 
-export declare namespace EarthasysNFT {
+export declare namespace INFT {
   export type PollutantStruct = {
     name: PromiseOrValue<string>;
     erc20Amount: PromiseOrValue<BigNumberish>;
-    intialAmounts: PromiseOrValue<BigNumberish>[];
+    initialAmounts: PromiseOrValue<BigNumberish>[];
     targetAmounts: PromiseOrValue<BigNumberish>[];
   };
 
@@ -43,7 +43,7 @@ export declare namespace EarthasysNFT {
   ] & {
     name: string;
     erc20Amount: BigNumber;
-    intialAmounts: BigNumber[];
+    initialAmounts: BigNumber[];
     targetAmounts: BigNumber[];
   };
 }
@@ -66,8 +66,8 @@ export interface EarthasysNFTInterface extends utils.Interface {
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
-    "mintNewProject(address,bytes,uint256,(string,uint256,uint256[],uint256[])[])": FunctionFragment;
-    "mintProjects(uint256,uint256,address,uint256,bytes,(string,uint256,uint256[],uint256[])[])": FunctionFragment;
+    "mintNewProject(address,uint256,string,bytes,(string,uint256,uint256[],uint256[])[])": FunctionFragment;
+    "mintProjects(uint256,uint256,string,address,uint256,bytes,(string,uint256,uint256[],uint256[])[])": FunctionFragment;
     "pause()": FunctionFragment;
     "paused()": FunctionFragment;
     "renounceRole(bytes32,address)": FunctionFragment;
@@ -193,9 +193,10 @@ export interface EarthasysNFTInterface extends utils.Interface {
     functionFragment: "mintNewProject",
     values: [
       PromiseOrValue<string>,
-      PromiseOrValue<BytesLike>,
       PromiseOrValue<BigNumberish>,
-      EarthasysNFT.PollutantStruct[]
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      INFT.PollutantStruct[]
     ]
   ): string;
   encodeFunctionData(
@@ -204,9 +205,10 @@ export interface EarthasysNFTInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
+      PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BytesLike>,
-      EarthasysNFT.PollutantStruct[]
+      INFT.PollutantStruct[]
     ]
   ): string;
   encodeFunctionData(functionFragment: "pause", values?: undefined): string;
@@ -556,7 +558,7 @@ export interface EarthasysNFT extends BaseContract {
     getOnChainMetadata(
       nftID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[EarthasysNFT.PollutantStructOutput[]]>;
+    ): Promise<[INFT.PollutantStructOutput[]]>;
 
     getRoleAdmin(
       role: PromiseOrValue<BytesLike>,
@@ -583,19 +585,21 @@ export interface EarthasysNFT extends BaseContract {
 
     mintNewProject(
       account: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
       newNFTID: PromiseOrValue<BigNumberish>,
-      pollutantDetails: EarthasysNFT.PollutantStruct[],
+      prefix: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      pollutantDetails: INFT.PollutantStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     mintProjects(
       prevNFTID: PromiseOrValue<BigNumberish>,
       newNFTID: PromiseOrValue<BigNumberish>,
+      newPrefix: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
-      pollutantDetails: EarthasysNFT.PollutantStruct[],
+      pollutantDetails: INFT.PollutantStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -718,7 +722,7 @@ export interface EarthasysNFT extends BaseContract {
   getOnChainMetadata(
     nftID: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<EarthasysNFT.PollutantStructOutput[]>;
+  ): Promise<INFT.PollutantStructOutput[]>;
 
   getRoleAdmin(
     role: PromiseOrValue<BytesLike>,
@@ -745,19 +749,21 @@ export interface EarthasysNFT extends BaseContract {
 
   mintNewProject(
     account: PromiseOrValue<string>,
-    data: PromiseOrValue<BytesLike>,
     newNFTID: PromiseOrValue<BigNumberish>,
-    pollutantDetails: EarthasysNFT.PollutantStruct[],
+    prefix: PromiseOrValue<string>,
+    data: PromiseOrValue<BytesLike>,
+    pollutantDetails: INFT.PollutantStruct[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   mintProjects(
     prevNFTID: PromiseOrValue<BigNumberish>,
     newNFTID: PromiseOrValue<BigNumberish>,
+    newPrefix: PromiseOrValue<string>,
     account: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     data: PromiseOrValue<BytesLike>,
-    pollutantDetails: EarthasysNFT.PollutantStruct[],
+    pollutantDetails: INFT.PollutantStruct[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -880,7 +886,7 @@ export interface EarthasysNFT extends BaseContract {
     getOnChainMetadata(
       nftID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<EarthasysNFT.PollutantStructOutput[]>;
+    ): Promise<INFT.PollutantStructOutput[]>;
 
     getRoleAdmin(
       role: PromiseOrValue<BytesLike>,
@@ -907,19 +913,21 @@ export interface EarthasysNFT extends BaseContract {
 
     mintNewProject(
       account: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
       newNFTID: PromiseOrValue<BigNumberish>,
-      pollutantDetails: EarthasysNFT.PollutantStruct[],
+      prefix: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      pollutantDetails: INFT.PollutantStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     mintProjects(
       prevNFTID: PromiseOrValue<BigNumberish>,
       newNFTID: PromiseOrValue<BigNumberish>,
+      newPrefix: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
-      pollutantDetails: EarthasysNFT.PollutantStruct[],
+      pollutantDetails: INFT.PollutantStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1154,19 +1162,21 @@ export interface EarthasysNFT extends BaseContract {
 
     mintNewProject(
       account: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
       newNFTID: PromiseOrValue<BigNumberish>,
-      pollutantDetails: EarthasysNFT.PollutantStruct[],
+      prefix: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      pollutantDetails: INFT.PollutantStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     mintProjects(
       prevNFTID: PromiseOrValue<BigNumberish>,
       newNFTID: PromiseOrValue<BigNumberish>,
+      newPrefix: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
-      pollutantDetails: EarthasysNFT.PollutantStruct[],
+      pollutantDetails: INFT.PollutantStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1319,19 +1329,21 @@ export interface EarthasysNFT extends BaseContract {
 
     mintNewProject(
       account: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
       newNFTID: PromiseOrValue<BigNumberish>,
-      pollutantDetails: EarthasysNFT.PollutantStruct[],
+      prefix: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      pollutantDetails: INFT.PollutantStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     mintProjects(
       prevNFTID: PromiseOrValue<BigNumberish>,
       newNFTID: PromiseOrValue<BigNumberish>,
+      newPrefix: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
-      pollutantDetails: EarthasysNFT.PollutantStruct[],
+      pollutantDetails: INFT.PollutantStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

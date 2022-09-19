@@ -15,7 +15,7 @@ import { readFileSync } from "fs";
 import path from "path";
 
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { Wallet } from "ethers";
+import { Wallet, BigNumber } from "ethers";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const dotenv = require("dotenv");
 const fetch = require("node-fetch");
@@ -43,15 +43,16 @@ describe("Earthasys tests", () => {
       owner,
       EarthasysProtocolArtifacts,
       [
-        "0xAaC0c3338A52e5D8D98bDdf8C5C5F54e093Ac49f",
-        "0xAaC0c3338A52e5D8D98bDdf8C5C5F54e093Ac49f",
+        owner.address,
+        owner.address,
       ]
     )) as Protocol;
     // eslint-disable-next-line prefer-const
     earthasysNFT = (await deployContract(owner, EarthasysNFTArtifacts, [
       earthasysProtocol.address,
     ])) as EarthasysNFT;
-
+    const tx = await earthasysProtocol.initialize(earthasysNFT.address);
+    await tx.wait();
     const erc20s = JSON.parse(
       readFileSync(path.join(__dirname, "data.json")).toString()
     );
@@ -137,12 +138,13 @@ describe("Earthasys tests", () => {
       ).to.be.eq(wallet.address);
     });
 
-    it.only("Should verify message for the private key from env", async () => {
+    it.only("Should mint new nft project and create and recover CID", async () => {
       const { owner, earthasysProtocol, earthasysNFT } = await loadFixture(
         deployOnceFixture
       );
+
       const { PRIVATE_KEY } = process.env;
-      let wallet = new ethers.Wallet(`0x${PRIVATE_KEY}`);
+      let wallet = owner;
       console.log(wallet.address);
       const projects = JSON.parse(
         readFileSync(path.join(__dirname, "../", "projects.json")).toString()
@@ -157,8 +159,9 @@ describe("Earthasys tests", () => {
      const res = await fetch(imageUrl);
      const blob = await res.blob();
      const splitted = imageUrl.split(".");
-     const fileName = project.name+splitted[splitted.length-1];
+     const fileName = project.name+"."+splitted[splitted.length-1];
      console.log(fileName);
+  
      
      project["image"] = new File(
       [blob as any],
@@ -169,19 +172,63 @@ describe("Earthasys tests", () => {
       });
 
      console.log(typeof project.image);
-   
+     console.log(project.pollutants);
+     
       const metadata = await client.store(
             project
       );
-      console.log(metadata);
+      console.log("CID:", metadata.ipnft);
+    //access via https://ipfs.io/ipfs/{metadata.ipnft}/metadata.json
+      const base16Encoded = parseCIDToBase64(metadata.ipnft);
+      let cid = CID.parse(base16Encoded, base16.decoder).toString();
+      console.log("Base16 encoded", base16Encoded.toString());
+      console.log("Parsed CID:", cid);
       
-      // const { messageHashBytes, v, r, s } = await signMessage(wallet);
-      // let tx = await earthasysProtocol.connect(wallet).addNewProject(
+      const tokenID = base16Encoded.substring(2); 
+      const tokenIDPrefix = tokenID.slice(0,7);
+      const tokenIDMain = tokenID.slice(7);
+      console.log("Prefix", tokenIDPrefix);
+      console.log("Main Token ID", tokenIDMain);
+      let nftID = "0x"+tokenIDMain;
 
-      // );
-      // expect(
-      //   await earthasysProtocol.VerifySignature(messageHashBytes, v, r, s)
-      // ).to.be.eq(wallet.address);
+    // //test
+    // const nftID = BigNumber.from("0xbfe3e6c66e71bddbb93c3fc646d6ff28ceec61ed3d111efdd2b1e574334faf7");
+    // const tokenIDPrefix ="7112203";
+    
+      console.log("Starting tx");
+      console.log(wallet.address);
+      const pollutantDetails =  project.pollutants.map((p: { pollutantName: any; erc20Amount: any; initialAmounts: any; targetAmounts: any; }) => {
+        return {
+          name: p.pollutantName,
+          erc20Amount: ethers.utils.parseUnits(p.erc20Amount.toString(), "ether"),
+          initialAmounts: p.initialAmounts,
+          targetAmounts: p.targetAmounts
+        }
+      });
+      console.log(pollutantDetails);
+      
+        
+      let tx = await earthasysProtocol.connect(wallet).addNewProject(
+        wallet.address,
+        nftID,
+        ""+tokenIDPrefix,
+        "0x00",
+       pollutantDetails
+      );
+      await tx.wait();
+      console.log("Tx complete");
+      
+      // "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff".length == 76 digit decimal -> 63 digit hex is the highest we can store as token ID 
+      
+      const hexTokenID = await earthasysNFT.uri(nftID);
+      console.log(hexTokenID);
+      let encodedCID = hexTokenID.slice(7,).toLowerCase(); 
+      expect(encodedCID).to.be.eq(base16Encoded);
+     
+      let cidFromURI = CID.parse(encodedCID, base16.decoder).toString();
+      expect(cidFromURI).to.be.eq(cid);
+      
+      
     });
 
     // it("Check if not owner cant change greet", async () => {

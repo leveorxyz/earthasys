@@ -20,38 +20,22 @@
         "DMS": "240°34'13.7531\"N 118°57'27.6095E",
         "DMM": "108° 52.4449, 143° 56.6519",
         "tags": ["carbon", "offset", "garments"]
-      },
-      {
-        "index": 1,
-        "picture": "https://xeero.io/wp-content/uploads/2022/05/Group-443.png",
-        "ProjectDirector": "Wilkerson Caldwell",
-        "gender": "male",
-        "company": "KOFFEE",
-        "email": "wilkersoncaldwell@koffee.com",
-        "phone": "+1 (993) 449-2360",
-        "address": "525 Kent Street, Rivera, Connecticut, 5205",
-        "budget": "$3,906.82",
-        "startDate": "2022-12-03T04:12:37 -06:00",
-        "DD": "35.0556 53.0701",
-        "DMS": "274°2'45.3467\"N 293°51'38.3401E",
-        "DMM": "192° 28.21, 251° 15.406",
-        "tags": ["carbon", "offset", "garments"]
       }
     ],
     "pollutants": [
       {
         "pollutantName": "Carbon",
         "unitName": "Kiloton",
-        "LegalThreshold": 500,
-        "initialAmounts": [509.6483, 588.0288],
-        "targetAmounts": [125.2747, 190.6768]
+        "erc20Amount": 1000000000,
+        "initialAmounts": [509648300],
+        "targetAmounts": [12527470]
       },
       {
         "pollutantName": "Lead",
         "unitName": "µg/m3",
-        "LegalThreshold": 50,
-        "initialAmounts": [70, 77],
-        "targetAmounts": [25, 30]
+        "erc20Amount": 50,
+        "initialAmounts": [70],
+        "targetAmounts": [25]
       }
     ]
   },
@@ -82,7 +66,7 @@
       {
         "pollutantName": "Carbon",
         "unitName": "Kiloton",
-        "LegalThreshold": 500,
+        "erc20Amount": 500,
         "initialAmounts": [587.5322],
         "targetAmounts": [208.3432]
       }
@@ -130,14 +114,14 @@
       {
         "pollutantName": "Carbon",
         "unitName": "Kiloton",
-        "LegalThreshold": 500,
+        "erc20Amount": 500,
         "initialAmounts": [592.1033, 600],
         "targetAmounts": [137.1894, 200]
       },
       {
         "pollutantName": "Lead",
         "unitName": "µg/m3",
-        "LegalThreshold": 70,
+        "erc20Amount": 70,
         "initialAmounts": [81, 78],
         "targetAmounts": [40, 50]
       }
@@ -185,7 +169,7 @@
       {
         "pollutantName": "Carbon",
         "unitName": "Kiloton",
-        "LegalThreshold": 500,
+        "erc20Amount": 500,
         "initialAmounts": [595.1392, 610],
         "targetAmounts": [205.5868, 330]
       }
@@ -234,7 +218,7 @@
       {
         "pollutantName": "Carbon",
         "unitName": "Kiloton",
-        "LegalThreshold": 500,
+        "erc20Amount": 500,
         "initialAmounts": [565.6379, 600],
         "targetAmounts": [160.0758, 300]
       }
@@ -283,14 +267,14 @@
       {
         "pollutantName": "Carbon",
         "unitName": "Kiloton",
-        "LegalThreshold": 500,
+        "erc20Amount": 500,
         "initialAmounts": [613.2221, 590],
         "targetAmounts": [245.9186, 120.5]
       },
       {
         "pollutantName": "Dust",
         "unitName": "ppm",
-        "LegalThreshold": 0.75,
+        "erc20Amount": 0.75,
         "initialAmounts": [2, 3.2],
         "targetAmounts": [0.5, 0.5]
       }

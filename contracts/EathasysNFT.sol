@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 
 import "./EarthasysERC20.sol";
+import "./Interfaces/INFT.sol";
 
 contract EarthasysNFT is ERC1155, AccessControl, Pausable, ERC1155Supply {
     bytes32 public constant URI_SETTER_ROLE = keccak256("URI_SETTER_ROLE");
@@ -16,17 +17,18 @@ contract EarthasysNFT is ERC1155, AccessControl, Pausable, ERC1155Supply {
 
     uint256[] private allIDs;
     mapping(uint256=>uint256) idIndex;
+    mapping(uint256=>string) tokenIDPrefix;
 
     mapping(string => address) _pollutantERC20Addresses;
 
-    struct Pollutant {
-        string name;
-        uint256 erc20Amount;
-        uint256[] intialAmounts;
-        uint256[] targetAmounts;
-    }
+    // struct Pollutant {
+    //     string name;
+    //     uint256 erc20Amount;
+    //     uint256[] initialAmounts;
+    //     uint256[] targetAmounts;
+    // }
 
-    mapping(uint256 => Pollutant[]) _onChainMetadata;
+    mapping(uint256 => INFT.Pollutant[]) _onChainMetadata;
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor(address _protocolAddress) ERC1155("ipfs://f0{id}") {
@@ -102,43 +104,53 @@ contract EarthasysNFT is ERC1155, AccessControl, Pausable, ERC1155Supply {
 
     function uri(uint256 _tokenID)
         public
-        pure
+        view
         override
         returns (string memory)
     {
         string memory hexstringtokenID;
         hexstringtokenID = uint2hexstr(_tokenID);
 
-        return string(abi.encodePacked("ipfs://f0", hexstringtokenID));
+        return string(abi.encodePacked("ipfs://f0", tokenIDPrefix[_tokenID], hexstringtokenID));
     }
 
     // TODO: Add support to mint multiple new projects
     function mintNewProject(
         address account,
-        bytes memory data,
         uint256 newNFTID,
-        Pollutant[] memory pollutantDetails
+        string memory prefix,
+        bytes memory data,
+        INFT.Pollutant[] memory pollutantDetails
     ) public onlyRole(MINTER_ROLE) {
         require(!exists(newNFTID), "NFT ID already exist");
 
         uint256 totalPolutants = pollutantDetails.length;
         for (uint256 i = 0; i < totalPolutants; i++) {
             require(
-                pollutantDetails[i].intialAmounts.length == 1 &&
+                pollutantDetails[i].initialAmounts.length == 1 &&
                     pollutantDetails[i].targetAmounts.length == 1 &&
                     _pollutantERC20Addresses[pollutantDetails[i].name] !=
                     address(0),
                 "Invalid arguments"
             );
         }
-        uint256 totalPollutants = pollutantDetails.length;
-        Pollutant[] storage newPollutantDetails = _onChainMetadata[allIDs.length];
-        for (uint256 index = 0; index < totalPollutants; index++) {
-            newPollutantDetails[index] = pollutantDetails[index];
+        INFT.Pollutant[] storage newPollutantDetails = _onChainMetadata[newNFTID];
+        for (uint256 index = 0; index < totalPolutants; index++) {
+            newPollutantDetails.push(pollutantDetails[index]);
         }
         _mint(account, newNFTID, 1, data);
         idIndex[newNFTID] = allIDs.length; 
         allIDs.push(newNFTID);
+        tokenIDPrefix[newNFTID] = prefix;
+    }
+
+    function updatePrefixIndex(uint256 prevNFTID, uint256 newNFTID, string memory newPrefix) internal {
+        uint256 prevIndex = idIndex[prevNFTID];
+        allIDs[prevIndex] = newNFTID;
+        idIndex[newNFTID] = prevIndex;
+        idIndex[prevNFTID] = 0;
+        tokenIDPrefix[prevNFTID] = "";
+        tokenIDPrefix[newNFTID] = newPrefix;
     }
 
   
@@ -147,10 +159,11 @@ contract EarthasysNFT is ERC1155, AccessControl, Pausable, ERC1155Supply {
     function mintProjects(
         uint256 prevNFTID,
         uint256 newNFTID,
+        string memory newPrefix,
         address account,
         uint256 amount,
         bytes memory data,
-        Pollutant[] memory pollutantDetails
+        INFT.Pollutant[] memory pollutantDetails
     ) public onlyRole(MINTER_ROLE) {
         require(exists(prevNFTID), "Project not minted");
         require(!exists(newNFTID), "Project already minted");
@@ -158,10 +171,10 @@ contract EarthasysNFT is ERC1155, AccessControl, Pausable, ERC1155Supply {
         require(prevBalance > 0, "Not the owner");
         uint256 totalPolutants = pollutantDetails.length;
         for (uint256 i = 0; i < totalPolutants; i++) {
-            Pollutant memory pollutant = pollutantDetails[i];
+            INFT.Pollutant memory pollutant = pollutantDetails[i];
             require(
-                pollutant.intialAmounts.length ==
-                    amount + _onChainMetadata[prevNFTID][i].intialAmounts.length &&
+                pollutant.initialAmounts.length ==
+                    amount + _onChainMetadata[prevNFTID][i].initialAmounts.length &&
                     pollutant.targetAmounts.length ==
                     amount + _onChainMetadata[prevNFTID][i].targetAmounts.length &&
                     _pollutantERC20Addresses[pollutant.name] != address(0),
@@ -172,11 +185,11 @@ contract EarthasysNFT is ERC1155, AccessControl, Pausable, ERC1155Supply {
             );
         }
         uint256 totalPollutants = pollutantDetails.length;
-        Pollutant[] memory prevPollutantDetails = _onChainMetadata[prevNFTID];
-        Pollutant[] storage newPollutantDetails = _onChainMetadata[newNFTID];
+        INFT.Pollutant[] memory prevPollutantDetails = _onChainMetadata[prevNFTID];
+        INFT.Pollutant[] storage newPollutantDetails = _onChainMetadata[newNFTID];
         for (uint256 index = 0; index < totalPollutants; index++) {
-            newPollutantDetails[index].intialAmounts = pollutantDetails[index]
-                .intialAmounts;
+            newPollutantDetails[index].initialAmounts = pollutantDetails[index]
+                .initialAmounts;
             newPollutantDetails[index].targetAmounts = pollutantDetails[index]
                 .targetAmounts;
             newPollutantDetails[index].erc20Amount = prevPollutantDetails[index].erc20Amount + pollutantDetails[index]
@@ -185,10 +198,7 @@ contract EarthasysNFT is ERC1155, AccessControl, Pausable, ERC1155Supply {
         
         _burn(account, prevNFTID, prevBalance);
         // _onChainMetadata[lastId] = pollutantDetails;
-        uint256 prevIndex = idIndex[prevNFTID];
-        allIDs[prevIndex] = newNFTID;
-        idIndex[newNFTID] = prevIndex;
-        idIndex[prevNFTID] = 0;
+        updatePrefixIndex(prevNFTID, newNFTID, newPrefix);
         _mint(account, newNFTID, prevBalance+amount, data);
     }
 
@@ -199,7 +209,7 @@ contract EarthasysNFT is ERC1155, AccessControl, Pausable, ERC1155Supply {
     function getOnChainMetadata(uint256 nftID)
         public
         view
-        returns (Pollutant[] memory)
+        returns (INFT.Pollutant[] memory)
     {
         return _onChainMetadata[nftID];
     }

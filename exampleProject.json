@@ -22,7 +22,7 @@
               "carbon",
               "offset",
               "ai"
-            ],
+            ]
         }
     ],
     
@@ -30,9 +30,9 @@
         {
             "pollutantName": "Carbon",
             "unitName": "Kiloton",
-            "amount": 500,
+            "erc20Amount": 500,
             "initialAmounts": [513.0565],
-            "targetAmlunt": [166.0878]
+            "targetAmount": [166.0878]
         }
       ]
     

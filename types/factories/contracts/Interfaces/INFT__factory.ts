@@ -16,8 +16,13 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "nftID",
+        name: "newNFTID",
         type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "prefix",
+        type: "string",
       },
       {
         internalType: "bytes",
@@ -32,8 +37,13 @@ const _abi = [
             type: "string",
           },
           {
+            internalType: "uint256",
+            name: "erc20Amount",
+            type: "uint256",
+          },
+          {
             internalType: "uint256[]",
-            name: "intialAmounts",
+            name: "initialAmounts",
             type: "uint256[]",
           },
           {
@@ -65,6 +75,11 @@ const _abi = [
         type: "uint256",
       },
       {
+        internalType: "string",
+        name: "newPrefix",
+        type: "string",
+      },
+      {
         internalType: "address",
         name: "account",
         type: "address",
@@ -87,8 +102,13 @@ const _abi = [
             type: "string",
           },
           {
+            internalType: "uint256",
+            name: "erc20Amount",
+            type: "uint256",
+          },
+          {
             internalType: "uint256[]",
-            name: "intialAmounts",
+            name: "initialAmounts",
             type: "uint256[]",
           },
           {
